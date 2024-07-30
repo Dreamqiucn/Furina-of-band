@@ -1,0 +1,167 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    
+    <div class="body column center">
+      <image class="icon "src="/common/icon/hi.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color:rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 50%;
+  flex: auto;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #c0c0c0;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+      texts: [
+    "在枫丹的这片水域中，我与芙宁娜的关系愈发亲密。我们常常交流，享受彼此的陪伴。今天，作为一个卷发短发控，芙宁娜的头发引起了我的关注。",
+    "我：呃，芙、芙宁娜大人，您今天的头发真漂亮！我能请您送给我几缕头发吗？我想收藏，作为对您的崇敬。",
+    "芙宁娜：什、什么？你要我的头发吗？你这小家伙，怎么这么变态啊！难道你喜欢我的头发吗？",
+    "我：不是不是，我不是这样的，我只是……您知道，我一直都很喜欢卷发，您的头发曲卷得刚好到脖子，真是美得令人窒息，像是水面上流动的波浪。",
+    "芙宁娜：哼，虽然你说得听起来有点好听，但我可不喜欢被你这样称赞。我的头发可不是给你随便摸的东西哦！",
+    "我：我明白，我绝对不想冒犯您。只是想要一小缕，能让我在想念您的时候拿出来看看……您的头发真的是太美了，仿佛隐含着水的灵动与神秘。",
+    "芙宁娜：哼，听你这么说，我倒是有点不知所措了。不过……唔，居然有人对我头发这么感兴趣，我倒有些惊讶。",
+    "我：这可不是随便的事！您的头发与众不同，我觉得它们不仅仅是头发，更是您独特魅力的象征，采撷一些来收藏，绝对是无上的荣幸！",
+    "芙宁娜：可我可不想什么东西都成为你的收藏品啊！你应该明白，这是我的私有物品，呀，真是的，让我有点害羞……不过，你这个小家伙，居然还想把我变成你的宝贝，真是太奇怪了！",
+    "我：我来天真的不是为了窃取，而是为了在这里感受到您的气息。每当看到您那优雅的卷发，我的心情总是特别愉悦。只是一小缕就好，或许可以让我时时刻刻感受您的存在。",
+    "芙宁娜：呃，这样说来你倒是说得很动人……我，虽然有点不想，可是又……感觉有点特别。我是不是有点被你说动了？",
+    "我：其实只要能让您开心，我无论如何都愿意去尝试！您的头发就像是水中的精灵，轻盈而有神秘感，恰如其分地展现了您的气质。",
+    "芙宁娜：呜……好吧，我想一想，总归我也没什么特别在乎的。只是，如果你真的要，我只给你一小缕，记得要好好珍惜，不要搞得太变态哦！",
+    "我：当然，绝对会好好珍惜的，无可替代的宝物！我会小心收藏，定会如同拯救一颗宇宙中的星星一般，让它永存于我心中。",
+    "芙宁娜：哼，你这家伙，嘴巴真甜……我，不会就这样轻易就被你打动的！只是一小缕而已，别太得意。",
+    "我：谢谢您，芙宁娜大人！只要能拥有您一小缕的头发，这已经是我最大的荣幸了。能感受到您的气息，这对我意义非凡！",
+    "芙宁娜：哼，别在这里得意洋洋的！我还很强大的，你可不要因此而小看我。只是……说起来，你倒是个有趣的小家伙，和你在一起的时光，让我有些喜欢这个样子。",
+    "渐渐地，芙宁娜伸出手，轻轻拔下一缕柔软的白发，像水波般流动在阳光的照耀下，我的心瞬间感到温暖和感动。",
+    "我：芙宁娜大人，您真的愿意让我这样做吗？",
+    "芙宁娜：哼，别再叫我大人了，我可不习惯！这只是一小缕，让你有所珍藏而已，别想太多！如果你再继续这样叫我，我可要生气了！",
+    "我：我会小心的，真心感谢您，芙宁娜，您就是我心中的水之女神！",
+    "芙宁娜：哼，无聊的家伙……不过，下次再跟我聊聊有关你的收藏趣事吧，我对这个……倒是感兴趣。",
+    "(作者真是短发卷发控！)"
+],
+xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

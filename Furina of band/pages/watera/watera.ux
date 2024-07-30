@@ -1,0 +1,164 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    
+    <div class="body column center">
+      <image class="icon "src="/common/icon/sad.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #c4c4c4;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+    texts: [
+    "场景：在一个夜晚，我在枫丹的某个小巷中散步，突然听见了微弱的哭泣声。",
+    "我：这里怎么会有人哭？难道是……（我小心翼翼地靠近声音的来源）",
+    "（我推开小巷的另一边，看到被愚人众执行官“仆人”欺负的芙宁娜，满脸的绝望与委屈。）",
+    "我：芙宁娜大人！你怎么了？我来帮你！",
+    "芙宁娜：（抬起头，望着我，眼中含着泪水）你、你这个笨蛋，赶快走开！我可、不想让你看到我这样……哼！",
+    "我：（心如刀绞，毫不犹豫地走向她）不，我不会离开！那些“仆人”想伤害你，我绝对不会让她得逞！",
+    "（我看到“仆人”正准备逃跑，便冲上去试图拦住她，但为时已晚，她已经消失在夜幕中。）",
+    "我：可恶，竟然让他逃了！没能保护好芙宁娜大人，我真是太不够力了……",
+    "芙宁娜：（擦擦眼泪，低声抽泣）我……我没想到会这样……我其实也想要……保护自己的……可是……嗝……",
+    "我：（心疼不已，蹲下身来）芙宁娜大人，不要哭，我在这里！我会永远站在你身边，保护你，不会让任何人再欺负你！",
+    "芙宁娜：但是……这次是我太弱了，竟然让他……呜呜，我……”",
+    "我：不，不是你的错！愚人众的“仆人”本来就很狡猾，我们都没预料到。他们竟敢欺负水神，你应该告诉其他人，尤其是那些相信你的人！",
+    "芙宁娜：（微微颤抖，脑海中开始浮现出我的话）你……你真的会替我出头吗？哪怕是……哪怕我以后也……不太勇敢？",
+    "我：当然，芙宁娜大人！你是我心中最强大的存在，即使不幸遭遇，也能重新振作起来。我会陪着你，无论前方有多困难！",
+    "芙宁娜：（眼神流露出一丝希望）真、真的吗？你愿意为我……做这些？",
+    "我：当然是真的！为了你，我愿意做任何事情。你是水神芙宁娜，不该被人欺负！想要成为更强大的存在，我会随时支持你！",
+    "芙宁娜：（泪水慢慢收敛，轻轻点头）那、那我就……试着去变强，虽然有时我会害怕，但有你在我身边……我会努力的。",
+    "我：嗯，一切都会好起来的，只要你记得，我是你的保镖，也是战斗的伙伴。",
+    "芙宁娜：保镖……（她小声咕哝着，眼角带着一丝笑意，随后抱住了我的头）谢谢你，真的是……谢谢你在这个时候出现。",
+    "我：不客气！成为芙宁娜大人的保镖，是我此生的荣幸。请不要再让自己受委屈了，我会竭尽全力保护你的！"
+],
+xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

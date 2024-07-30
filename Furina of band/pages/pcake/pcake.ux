@@ -1,0 +1,132 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">小蛋糕</text>
+    </div>
+    <div class="header column center">
+      <text class="b">介绍</text>
+    </div>
+    
+    <div class="description footer column center">
+      
+        <image class="icon" src="/common/icon/cake.png"></image>
+        <text class="d">普茹斯蒂司，芙宁娜最喜欢的小蛋糕，给芙宁娜吃小蛋糕可以增加对她的好感度</text>
+        <text class="d">太好吃了</text>
+
+     
+    </div>
+    
+    
+  </div>
+</template>
+
+<style> 
+
+.description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+
+  }
+  .icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 10px;
+}
+.page {                 /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  width: 383px;
+  height: 480px;
+}
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.footer {
+  margin-top: 10px;
+  
+}
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+.a{
+  font-size: 30px;
+}
+.b{
+  font-size: 25px;
+  color: #ffffff;
+ 
+}
+.c{
+  font-size: 30px;
+  color: #999999;
+  margin-left: 30px;
+}
+.d{
+  font-size: 20px;
+  color: #adadad;
+  margin-top: 10px;
+}
+.e{
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+</style>
+
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+
+  export default {
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+        uri: '/pages/photo'
+        })
+    }
+    
+    }
+  }
+</script>

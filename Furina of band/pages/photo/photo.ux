@@ -1,0 +1,284 @@
+<template>
+<div  onswipe="toHomePage">
+<div class="page">
+    <text class="title">图签</text>
+    <div @click="rideap"><text class="b">规则</text></div>
+    
+    <list class="list" >
+      <list-item class="item center" type="custom" @click="cd">
+        <image class="image" src="/common/icon/cd.jpg" />
+        <text class="name">《清涟》CD</text>       
+      </list-item>
+      <list-item class="item center" type="custom" @click="cake">
+        <image class="image" src="/common/icon/cake.png" />
+        <text class="name">小蛋糕</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="uncake">
+        <image class="image" src="/common/icon/uncake.png" />
+        <text class="name">蛋糕</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="ball">
+        <image class="image" src="/common/icon/ball.png" />
+        <text class="name">纠缠之缘</text>
+      </list-item>
+      <list-item class="item center" type="custom"@click="juice">
+        <image if="level >= 10" class="image" src="/common/icon/juice.png" />
+        <image if="level < 10" class="image" src="/common/icon/juice2.png" />
+        <text if="level >= 10" class="name">枫达饮料</text>
+        <text if="level < 10" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="god">
+        <image if="level >= 20" class="image" src="/common/icon/god.png" />
+        <image if="level < 20" class="image" src="/common/icon/god2.png" />
+        <text if="level >= 20" class="name">神之眼</text>
+        <text if="level < 20" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="xz">
+        <image if="level >= 30" class="image" src="/common/icon/xz.png" />
+        <image if="level < 30" class="image" src="/common/icon/xz2.png" />
+        <text if="level >= 30" class="name">鞋子</text>
+        <text if="level < 30" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom"@click="water">
+        <image if="level >= 40" class="image" src="/common/icon/water.png" />
+        <image if="level < 40" class="image" src="/common/icon/water2.png" />
+        <text if="level >= 40" class="name">眼泪</text>
+        <text if="level < 40" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="mz">
+        <image if="level >= 50" class="image" src="/common/icon/mz.png" />
+        <image if="level < 50" class="image" src="/common/icon/mz2.png" />
+        <text if="level >= 50" class="name">小帽子</text>
+        <text if="level < 50" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="foot">
+        <image if="level >= 60" class="image" src="/common/icon/foot.png" />
+        <image if="level < 60" class="image" src="/common/icon/foot2.png" />
+        <text if="level >= 60" class="name">袜子</text>
+        <text if="level < 60" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="hair">
+        <image if="level >= 70" class="image" src="/common/icon/hair.png" />
+        <image if="level < 70" class="image" src="/common/icon/hair2.png" />
+        <text if="level >= 70" class="name">头发</text>
+        <text if="level < 70" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="novel">
+        <image if="level >= 80" class="image" src="/common/icon/novel.png" />
+        <image if="level < 80" class="image" src="/common/icon/novel2.png" />
+        <text if="level >= 80" class="name">轻小说</text>
+        <text if="level < 80" class="name">？</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="th">
+        <image if="level >= 90" class="image" src="/common/icon/th.png" />
+        <image if="level < 90" class="image" src="/common/icon/th2.png" />
+        <text if="level >= 90" class="name">腿环</text>
+        <text if="level < 90" class="name">？</text>
+      </list-item>
+      
+      <list-item class="item center" type="custom" @click="xm">
+        <image if="level >= 100" class="image" src="/common/icon/xiaomi.png" />
+        <image if="level < 100" class="image" src="/common/icon/xiaomi2.png" />
+        <text if="level >= 100" class="name">小米手环8Pro</text>
+        <text if="level < 100" class="name">？</text>
+      </list-item>
+      
+    </list>
+  </div>
+</div>
+  
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+
+export default {
+  public: {
+    level: 0
+  },
+  onInit() {
+    storage.get({
+      key: "level",
+      success: (resC) => {
+        this.level = resC ? parseInt(resC, 10) : 5
+      }
+    })
+  },
+  rideap() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/ideap"
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  },
+  cake() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 0){return}
+    router.replace({
+      uri: "/pages/pcake"
+    })
+  },
+  novel() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 80){return}
+    router.replace({
+      uri: "/pages/novel2"
+    })
+  },
+  water() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 40){return}
+    router.replace({
+      uri: "/pages/water"
+    })
+  },
+  juice() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 10){return}
+    router.replace({
+      uri: "/pages/juice"
+    })
+  },
+  foot() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 60){return}
+    router.replace({
+      uri: "/pages/wz"
+    })
+  },
+  xz() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 30){return}
+    router.replace({
+      uri: "/pages/xz"
+    })
+  },
+  hair() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 70){return}
+    router.replace({
+      uri: "/pages/hair"
+    })
+  },
+  god() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 20){return}
+    router.replace({
+      uri: "/pages/god"
+    })
+  },
+  th() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 90){return}
+    router.replace({
+      uri: "/pages/th"
+    })
+  },
+  cd() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 0){return}
+    router.replace({
+      uri: "/pages/cd"
+    })
+  },
+  xm() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 100){return}
+    router.replace({
+      uri: "/pages/xm"
+    })
+  },
+  ball() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 0){return}
+    router.replace({
+      uri: "/pages/ball2"
+    })
+  },
+  uncake() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 0){return}
+    router.replace({
+      uri: "/pages/uncake"
+    })
+  },
+  mz() {
+    if(this.level < 50){return}
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/mz"
+    })
+  }
+}
+</script>
+
+<style>
+.b {
+  font-size: 25px;
+  color: #757575;
+  margin-bottom: 10px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: center;
+  justify-content: center;
+ 
+  /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.title {
+  margin-top: 10px;
+  padding: 20px 0;
+  font-size: 32px;
+  color: #ffffff;
+}
+
+.list {
+  flex: 1;
+  width: 340px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.item {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color:rgba(255, 255, 255, 0.2);
+}
+
+.image {
+  width: 128px;
+  flex: auto;
+  margin-left: 20px;
+}
+
+.name {
+  width: 100%;
+  font-size: 25px;
+  text-align: center;
+  color: #b6b6b6;
+}
+</style>

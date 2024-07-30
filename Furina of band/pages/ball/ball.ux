@@ -1,0 +1,221 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">祈愿</text>
+      <text class="b">数目：{{ money }}</text>
+    </div>
+    <div class="body column center">
+      <image class="icon" src="/common/icon/ball.png"></image>
+    </div>
+    <div class="footer column center">
+      <div style="margin-top: 10px">
+        <input class="but" type="button" value="十连" style="font-size: 30px; color: #ffffff" onclick="handleButtonClick" />
+      </div>
+      
+    </div>
+  </div>
+</template>
+
+<style>
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.info {
+  /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  justify-content: center;
+  /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #d1c5c5;
+}
+
+.e {
+  font-size: 25px;
+  color: #c9c9c9;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "@system.storage"
+export default {
+  public: {
+    today: 0,
+    lastdayb: 0,
+    money: 0,
+    adjustedAa: 0
+  },
+
+  onInit() {
+    const today = new Date()
+    const adjustedAa = today.getDay() === 0 ? 7 : today.getDay() // 将星期数转换为1-7的格式
+    
+    storage.get({
+      key: "lastdayb",
+      success: (resB) => {
+        this.lastdayb = resB ? parseInt(resB, 10) : 0 // 获取并设置 lastday
+        //如果 lastday 与 adjustedA 相等，说明今天已经更新过 level，不需要更新
+        //如果 lastday 是 6 且 adjustedA 是 7，说明今天是星期日，需要更新 level
+        if (adjustedAa > this.lastdayb && adjustedAa < 7) {
+          // 更新 lastday 和 level
+          storage.set({
+            key: "lastdayb",
+            value: adjustedAa === 7 ? 0 : adjustedAa.toString()
+            // 如果 adjustedA 是 7，说明今天是星期日，需要将 lastday 置为 0
+          })
+
+          storage.get({
+            key: "money",
+            success: (resmm) => {
+              this.money = resmm ? parseInt(resmm, 10) : 0
+              this.money += 10
+              storage.set({
+                key: "money",
+                value: this.money.toString()
+              })
+            }
+          })
+        }  else if(adjustedAa === 7 && this.lastdayb === 6){
+          storage.set({
+            key: "lastdayb",
+            value: "0"
+          })
+          storage.get({
+            key: "money",
+            success: (resmm) => {
+              this.money = resmm ? parseInt(resmm, 10) : 0
+              this.money += 10
+              storage.set({
+                key: "money",
+                value: this.money.toString()
+              })
+            }
+          })
+        }else if (adjustedAa === this.lastdayb || (adjustedAa === 7 && this.lastdayb === 0)) {
+          // 不更新 level
+          storage.get({
+            key: "money",
+            success: (resmm) => {
+              this.money = resmm ? parseInt(resmm, 10) : 10
+            }
+          })
+        }
+      }
+    })
+  },
+  decreaseA() {
+    storage.set({
+      key: "money",
+      value: (this.money - 10).toString(),
+      success: (resp) => {
+        this.money = parseInt(resp.value, 10)
+      }
+    })
+  },
+  redirectToRandomPage() {
+    const randomNumber = Math.floor(Math.random() * 10) + 1
+    switch (randomNumber) {
+      case 1:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+        router.replace({
+          uri: "/pages/one"
+        })
+        break
+      case 2:
+      case 10:
+        router.replace({
+          uri: "/pages/two"
+        })
+        break
+      case 3:
+        router.replace({
+          uri: "/pages/three"
+        })
+        break
+    }
+  },
+  handleButtonClick() {
+    if (this.money < 10) {
+      return
+    }
+    this.decreaseA()
+    this.redirectToRandomPage()
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  }
+}
+</script>

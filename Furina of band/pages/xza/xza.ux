@@ -1,0 +1,170 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+
+    <div class="body column center">
+      
+      <image class="icon "src="/common/icon/f1.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color:rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  
+  margin-bottom: 10px;
+}
+.icon {
+  width: 80%;
+  flex: auto;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #bbbbbb;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+      texts : [
+    "场景：在枫丹庭附近，我和芙宁娜正在愉快地交谈。此时我心中突然冒出一个大胆的请求。",
+    "我：呃，芙宁娜大人，我有个……一个小请求。",
+    "芙宁娜：哼，你这小子，有什么事快说。别在这儿拖拖拉拉的，让我等得不耐烦。",
+    "我：其实我想……可以借您的鞋子欣赏一下吗？就是……您的那双特别漂亮的鞋子！",
+    "芙宁娜（微微一愣，脸上带着一丝红晕）：你，你在说什么啊？这么……这么无礼的要求！我可不是给你随便借鞋子的神明哦！",
+    "我：我知道，但是，芙宁娜大人，您的鞋子真的太美了！我只是想看看，想感受一下，您……您穿在脚上的感觉。",
+    "芙宁娜：这，这种事情怎么可以轻易借给你呢！谁知道你会对我的鞋子做些什么……哼，真是让人火大！",
+    "我：我绝对不会做坏事的，芙宁娜大人！只想欣赏一下，您一定知道我有多崇拜您，您的每一件东西对我来说都特别重要！",
+    "芙宁娜（低着头，显得有些害羞）：你、你这个人……就知道骄傲。不过……如果是为了让我更好地展示我的美，你是不是有点道理？",
+    "我：当然有！您穿上那双鞋子就像是水中的女神，我对于那种优雅的状态感到无比向往。求求您，借给我试试吧！",
+    "芙宁娜（小声嘟囔着）：借给你、借给你总觉得有点不太妥当……可是……我也不能让你太失望。",
+    "我：谢谢您，芙宁娜大人！我保证会珍惜的，绝对不会让您失望的！",
+    "芙宁娜（颇为矛盾）：不过……你真的要小心哦，鞋子可是一双非常重要的宝贝，我不希望你把它弄脏了……",
+    "我：放心吧，我会小心的！您可以相信我的！那双鞋子在您手里简直就是艺术品，我绝对会好好对待的！",
+    "芙宁娜（最终还是有些妥协）：哼，既然你这么执着……那就给你借一下吧，不过要记住，我的鞋子可不是什么人都能随意试穿的哦！",
+    "我：谢谢，芙宁娜大人！我会好好珍惜这次机会的！能穿上您的鞋子简直是我的荣耀！",
+    "芙宁娜（试图掩饰自己的骄傲）：别得意得太早，要是我发现你弄坏了鞋子……哼，我可不会放过你的！",
+    "我：绝对不会的，我会小心的，您就放心吧！能穿上芙宁娜大人的鞋子，这对我来说是无上的荣耀！",
+    "芙宁娜（稍微带着不满）：哼，让你这么高兴，我其实也有点……有点不太习惯。不过，看你这么喜欢，倒也算是让我觉得有点意外的开心……",
+    "我：能让我感受到您的气息，我真的很开心，芙宁娜大人！这鞋子就像是您的代表，能够与您更加贴近，真的是太好了！",
+    "芙宁娜（脸颊微微发烫）：好……好吧，也许我也不介意让你这样珍惜。但是，不要让人看到哦，免得又有人嫉妒我的鞋子。",
+    "我：我一定会秘密欣赏的，绝对不会让其他人知道！谢谢您，芙宁娜大人，您真的是太好了！",
+    "芙宁娜（微微撇嘴，显得有些娇羞）：哼，别太得意！这只是我一时心软而已，下次可不一定哦！",
+    "我：我会谨记这个机会的，芙宁娜大人！您真的是我心中的女神，感谢您！"
+],
+
+    xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

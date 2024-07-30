@@ -1,0 +1,163 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    
+    <div class="body column center">
+      <image class="icon "src="/common/icon/f2.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #c2c2c2;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+      texts: [
+    "在提瓦特大陆的一隅，我与芙宁娜的关系愈发亲密。在一个普通的午后，我鼓起勇气，走向了她。",
+    "我：芙、芙宁娜大人，今天的天气很好，真想跟您聊聊。",
+    "芙宁娜：哼，聊天而已，你这小家伙没有什么好事吗？难道是想要沾我的光？",
+    "我：不不，我只是想……想欣赏一下您的玉足，您能给我看看吗？还有，您可以借给我一双袜子吗？我想收藏。",
+    "芙宁娜：什、什么？你在说什么傻话呢？你真的在请求我借袜子？你、你可真是个变态！哼，不过……我还是有点……开心。",
+    "我：真的？太好了！您的玉足真是美丽无比，白皙的皮肤闪烁着光泽，像是温暖的水流，指尖优雅得像柳叶，细致得让我想要好好珍惜。",
+    "芙宁娜：哼，你这家伙，居然这么会说话！不过，我才不在乎你怎么看我的？只不过是一些普通的脚而已！不、不就是有点好看吗？",
+    "我：不，这样的美丽是普通人无法比拟的！尤其是您的小脚趾，弯弯的，红润的，真是让人怦然心动……如果能借到袜子，简直不知道要多么幸运！",
+    "芙宁娜：哼，听你这么说，我才不是为了你的收集而开心呢！只是……好吧，你这个小家伙，应该好好珍惜才行。而且，我可不会轻易把我的袜子给你！",
+    "我：我知道，芙宁娜大人，您心里一定有我的位置。您能跟我聊聊关于您的足部的故事吗？我是说，跟这些袜子有关的故事。",
+    "芙宁娜：哼，你真是个怪人……不过好吧，我的确有过一些特别的经历。我的袜子都是我自己用水元素编织的，特殊的，拥有保护水流的力量。",
+    "我：这太神奇了！我仿佛能想象到那些流动的水元素在您脚边舞动，那种灵动感实在太迷人了。",
+    "芙宁娜：哼，你真的很会说话……不过你要记住，不要贪心哦。我可不想看到你被别的人发现了你的这个小癖好。",
+    "我：放心，芙宁娜大人，只有您知道这些秘密。我会好好珍惜的！如果有一天能拥有您的袜子，那真是无上的荣幸。",
+    "芙宁娜：哼，别想得太美！不过……我可以考虑给你一双旧的袜子，你拿去收藏也无妨，反正那些东西我也不太需要。",
+    "我：真的太感谢您了，芙宁娜大人！这对我来说意义非凡！您的慷慨真让我感到温暖！",
+    "芙宁娜：哼，别太得意，记住了，这是因为我心情好而已！如果你再继续这样骚扰我的话，我可就生气了！",
+    "我：当然，我一定会乖乖的。多谢您，芙宁娜大人！我会珍视这份荣幸，绝对不会让您失望的！",
+    "芙宁娜：哼，你这个家伙，有时候真的让我觉得……有点可爱。好吧，快去准备，别让我的袜子被搞得脏兮兮的。"
+],
+xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

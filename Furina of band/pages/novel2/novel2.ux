@@ -1,0 +1,184 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">轻小说</text>
+    </div>
+    <div class="header column center">
+      <text class="b">介绍</text>
+    </div>
+    
+    <div class="description footer column center">
+      
+        <image class="icon2" src="/common/icon/novel.png"></image>
+        <text class="d">芙宁娜最喜欢的轻小说，《转生之我成为雷电将军然后天下无敌》，与稻妻建交时八重神子送过来的礼物。</text>
+        <text class="d">太好看了</text>
+        
+     
+    </div>
+    <text class="b">内容</text>
+    <div class="description footer column center">
+      <text class="d">
+          人生有时候就是这样。
+        爸妈总说要明辨是非，衡量好坏，但现实永远是在两个坏的选项中选出不那么坏的那一个。
+        女朋友已经决定和我分手了，她还告诉我的上级说我有赌瘾，现在工作也没了。我可没闲钱去做这种空虚的事，要是不交保护费，我爸妈的安全就难说了。
+        然后他们骂我没出息，不干正事，也不存钱。
+        我是为了谁啊……我也没做错什么吧。
+        要说错的话，大概就是错在努力也活不下去，想了结自己，还没这个胆子。
+        算了，等他们来了赶紧交钱。交完钱还得想想怎么赚摩拉，不然只能吃海草了。
+        来，不如我们再做一个两坏之中选其轻的选择吧。
+        被一刀砍翻，或者被什么飞来的石头砸得脑袋开花，哪个会痛快些呢？
+        「嗞嗞嗞——」
+        从刚刚开始就有奇怪的声音，怎么回事……
+        不会是要打雷吧？
+        ……
+        醒来的时候已经不知道过了多久。
+        我只记得失去意识之前，好像瞬间被某种尖锐的东西贯通了全身。
+        「好像，不怎么痛……啊？！」
+        我被吓得叫出了声。
+        这是我的声音吗？
+        「啊，啊——」
+        居然是真的。
+        我抬起手臂，华丽的布料之下是无比白皙的肌肤。
+        这显然不是我的身体，但一时间我的大脑并没有跳跃到那个显而易见的答案。
+        因为太不可思议了。
+        我尝试站起来，这才完整地目睹了这套衣服的样子。
+        每一个细节都无比华贵，只有至高无上的人才有福消受。
+        难道说……
+        「怎么不是那小子……嗯？雷、雷电将军？」
+        掷地有声的称呼。
+        对啊。
+        我好像成为雷电将军了。
+        收保护费的海乱鬼们列阵排开，虽然看不到他们的脸，但看动作就充满了戒备，还有些畏惧。
+        这可是我从来都没见过的样子。
+        「兄弟们，报、报仇的机会到了……」
+        声音很明显地由大变小，他害怕了。
+        不愿在小弟面前丢脸，就这么逃掉可不行，但他也早就想到了战斗的结果。
+        人数在逐渐变多，十人，二十人，五十人……
+        可能觉得能用人数弥补力量上的劣势吧。
+        但雷电将军的力量，岂会和凡人放置在同一天平之上？
+        「就用你们，试试刀吧。」
+        屏气，凝神，摆好架势。
+        命运即将改变，在这一刀之后。
+        「无想……」
+        ……
+        等等。
+        「无想的一刀」，要怎么用来着？</text>
+      <text class="d">太好看了</text>
+      
+   
+  </div>
+    
+    
+  </div>
+</template>
+
+<style> 
+
+.description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+
+  }
+  .icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 10px;
+}
+.page {                 /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  width: 383px;
+  height: 480px;
+}
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.footer {
+  margin-top: 10px;
+  
+}
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+.a{
+  font-size: 30px;
+}
+.b{
+  font-size: 25px;
+  color: #ffffff;
+ 
+}
+.c{
+  font-size: 30px;
+  color: #999999;
+  margin-left: 30px;
+}
+.d{
+  font-size: 20px;
+  color: #adadad;
+  margin-top: 10px;
+}
+.e{
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+</style>
+
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+
+  export default {
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+        uri: '/pages/photo'
+        })
+    }
+    
+    }
+  }
+</script>
