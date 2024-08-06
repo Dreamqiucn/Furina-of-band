@@ -1,0 +1,141 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center" >
+      <text class="a">小蛋糕</text>
+      <text class="b">普茹斯蒂司还有 {{cake}} 个</text>
+    </div>
+    <div class="body column center">
+      <image class="icon "src="/common/icon/cake.png"></image>            
+    </div>
+    <div class="footer column center">
+      <div  style="margin-top: 10px;">
+        <input class="but" type = "button" value = "吃掉" style="font-size: 30px;color: #ffffff;" onclick="eatCake"> 
+      </div>
+    </div>
+    
+  </div>
+  
+</template>
+
+<style> 
+.but{
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.footer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 40px;
+}
+.b{
+  font-size: 30px;
+  color: #d1c5c5;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public:{
+      cake: 0,
+      level: 0
+    },
+    eatCake(){
+      storage.get({
+        key: "cake",
+            success: (resca) => {
+              this.cake = resca ? parseInt(resca, 10) : 0
+              if (this.cake <= 0) {
+                return
+              }
+              this.cake -= 1
+              storage.set({
+                key: "cake",
+                value: this.cake.toString()
+              })
+              storage.get({
+                key: "level",
+                success: (resA) => {
+                  this.level = resA ? parseInt(resA, 10) : 0
+                  this.level += 5
+                  storage.set({
+                   key: "level",
+                   value: this.level.toString()
+              })
+            }
+          })
+            }})
+    },
+    onInit() {
+      storage.get({
+        key: "cake",
+            success: (resca) => {
+              this.cake = resca ? parseInt(resca, 10) : 0
+            }
+    })},
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/index'
+        })
+      }
+    }
+  }
+</script>

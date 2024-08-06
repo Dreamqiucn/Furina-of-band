@@ -1,0 +1,166 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    
+    <div class="body column center">
+      <image class="icon "src="/common/icon/f.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #b6b6b6;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+      texts : [
+    "场景：你在枫丹城内闲逛，偶然间捡到了芙宁娜的神之眼。突然，被芙宁娜发现了",
+    "芙宁娜： 哼，你这个小家伙，竟然敢随意碰我的神之眼！真是……咳，真是个大胆的凡人。",
+    "我： 啊，芙、芙宁娜大人！您居然在这里！对不起，我只是……呃，我只是不小心捡到了这个！",
+    "芙宁娜： 不、不是你随意捡到的！那是我的东西，是我最近刚丢的神之眼！你、你干嘛这么紧张，是因为我吗？",
+    "我：我不是紧张，我只是……非常兴奋！能见到芙宁娜大人真是太不可思议了！您是水神，确实非常威严而美丽，让人不自觉地想要敬畏您！",
+    "芙宁娜： 哼，你这小家伙，居然敢夸我？要知道，我可不是随便会被人的赞美就高兴的……虽然说，听到这样的夸奖，让我有点……嗯，想笑。",
+    "我：芙宁娜大人，我好崇拜你，太喜欢你了！",
+    "芙宁娜： 哼，我其实、其实也不太习惯凡人对我这么崇拜的样子。可、可是……你能把我的神之眼还给我吗？",
+    "我：当然可以，芙宁娜大人！这是您的神之眼，我绝对不会占为己有的。您能在这里出现，似乎是因为这个神之眼，我感到无比荣幸！",
+    "芙宁娜： 哼，居然会这么懂事，难得。从你身上……我感觉到了一丝独特的气息。你并不是普通的凡人，能够吸引我的注意，倒是有点本事。",
+    "我：啊，芙宁娜大人，您是说我有本事吗？我不敢相信！我只是个普通的冒险者而已，只是想在这片土地上体验不同的风景。",
+    "芙宁娜： 这倒是没错，不过……既然你能找到了我的神之眼，难道不想尝试成为我的追随者吗？虽然我平时不太喜欢别人靠近，但……你倒是让我有点……期待。",
+    "我：追随您？天哪，芙宁娜大人，我可没有这个勇气！您是神，我只是个微不足道的凡人，哪敢奢望跟在您身边。",
+    "芙宁娜： 哼，别这么说，凡人的价值不是由身份决定的。我……我其实也希望能有个可以理解我的朋友，能够在我面前不那么拘谨的那种。",
+    "我：您在说我吗？这让我有些紧张，但也很高兴……我会努力，不仅是做您的追随者，更希望能成为您的朋友！",
+    "芙宁娜： 这……还挺让我意外的。如果你真的想和我成为朋友，那就证明给我看！不过，你可千万不要让我失望，不然我会很生气的！",
+    "我：我会尽力的，芙宁娜大人！能够得到您的认可是我最大的目标！我一定要展示给您看，我是有价值的！",
+    "芙宁娜： 嗯，这样听起来倒是有点道理。哼，不过你不需要过于紧张，偶尔放松一下。毕竟，这里是我的领域，和我在一起，应该享受一点乐趣。",
+    "我：好的，芙宁娜大人！我会努力放松，尽量让自己变得更厉害，偿还您的信任。也许有一天，我可以为您做点什么，证明我的价值！",
+    "芙宁娜： 我期待你的成长，哼。不过……记得，如果有任何事情要找我，随时可以来找我。只要别让我失望就好。",
+    "我：当然，芙宁娜大人！我发誓，一定会在您的脚步下不断进步，让您引以为傲的！"
+],
+
+    xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

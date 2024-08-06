@@ -1,0 +1,185 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">玩法/教程</text>
+    </div>
+    <div class="header column center">
+      <text class="b">简要介绍</text>
+    </div>
+    
+    <div class="description footer column center">
+      
+        
+        <text class="d">这是一个类似于Galgame或养成类的vela快应用游戏。你可以通过签到，吃小蛋糕来获得好感度。</text>
+        <text class="d">好感度达到一定值会解锁芙宁娜的一些小物品在“图鉴”里，和解锁一些新的“故事”</text>
+
+     
+    </div>
+    <div class="header column center">
+      <text class="b">详细功能介绍</text>
+    </div>
+    <div class="description footer column center">
+      
+        
+        <text class="d">1.签到  每天打开一次此程序，则好感度会自动增加5，并且增加十个“纠缠之缘”到“祈愿”界面</text>
+        <text class="d">2.祈愿  点击“祈愿”按钮，会有三种出“小蛋糕”（普茹斯蒂司）的可能，概率最大的为出一个“小蛋糕”，其次为两个，概率最小为出三个</text>
+        <text class="d">3.小蛋糕  祈愿中获得的小蛋糕，在“小蛋糕”界面可以吃掉，吃掉后，会获得5%好感度</text>
+        <text class="d">4.故事  故事随好感度的增加而解锁，其内容我是让ChatGPT根据我的意愿写的，所以内容可能不太正常，我不会写这种故事什么的，并且工作量太大了，所以让人工智能写了，详细规则请看“故事”界面</text>
+        <text class="d">5.图鉴  好感度达到一定值后，在图鉴界面会解锁芙宁娜的一些小物品，详细规则请看“图鉴”界面，点击小物品可以查看小物品的详细介绍</text>
+        
+
+    </div>
+    <div class="header column center">
+      <text class="b">清除数据方法</text>
+    </div>
+    <div class="description footer column center">
+      
+        
+        <text class="d">打开“关于”页面，点击芙宁娜图标，进入界面，点击“清除数据”按钮五次，即可清除本程序后台所有数据，好感度，小蛋糕，纠缠之缘等</text>
+        <text class="d">清除数据，所宜深慎</text>
+
+
+    </div>
+    <div class="header column center">
+      <text class="b">作者介绍/开发历程</text>
+    </div>
+    <div class="description footer column center">     
+        <text class="d">16岁，是学生，家住在山东济宁</text>
+        <text class="d">之前对Vue.js没有太多了解，前面的开发过程非常困难，问了“Vela开发交流群”，及一些大佬老哥们许多问题，但万事开头难，终于在最近完成了这个快应用。</text>
+        <text class="d">项目目前只做了8 Pro版本，其它版本没有适配，但直接安装也应该是可以使用的，只不过UI非常不好看，经测试，红米手表4的效果可以，S1pro还差不多，不过有的显示不全,手环9的不太好。</text>
+        <text class="d">该项目已开源，我已将源代码上传在Github和Gitee上，欢迎二创或提出建议，或制作其他Vela平台的适配版本，但请在二创前联系我，及标明原作者出处。</text>
+        
+      </div>
+      <div class="header column center">
+        <text class="b">联系方式/项目地址</text>
+      </div>
+      <div class="description footer column center">
+    <text class="d">QQ:2471822525 </text> 
+    <text class="d">Bilibili: Dreamqiucn</text>
+    <text class="d">邮箱:2471822525@qq.com </text> 
+    <text class="d">Github:https://github.com/dreamqiucn/Furina-of-band</text> 
+    <text class="d">Gitee：https://gitee.com/dreamqiucn/Furina-of-band</text> 
+      </div>
+    <div class="header column center">
+      <text class="b">赞赏码</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">如果你觉得这个项目很有趣，十分喜欢，那么欢迎打赏，感谢大家的一切支持，鼓舞我继续开发下去。</text> 
+      
+        <image class="icon2" src="/common/icon/wx.png"></image>
+        <image class="icon2" src="/common/icon/zfb.jpg"></image>
+      </div>
+    
+  </div>
+</template>
+
+<style> 
+
+.description {
+    background-color:rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+
+  }
+  .icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 10px;
+}
+.page {                 /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  width: 383px;
+  height: 480px;
+}
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+.footer {
+  margin-top: 10px;
+  
+}
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+.a{
+  font-size: 40px;
+}
+.b{
+  font-size: 30px;
+  color: #ffffff;
+ 
+}
+.c{
+  font-size: 30px;
+  color: #999999;
+  margin-left: 30px;
+}
+.d{
+  font-size: 30px;
+  color: #adadad;
+  margin-top: 10px;
+}
+.e{
+  font-size: 30px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+</style>
+
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+
+  export default {
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+        uri: '/pages/index'
+        })
+    }
+    
+    }
+  }
+</script>

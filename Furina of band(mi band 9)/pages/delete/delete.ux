@@ -1,0 +1,158 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">清除数据</text>
+      <text class="b">点击五次按钮，即可清除所有数据</text>
+      <text class="b">此操作不可恢复！</text>
+    </div>
+
+    <div class="footer column center">
+      <div style="margin-top: 10px">
+        <input class="but" type="button" value="清除" style="font-size: 30px; color: #ffffff" onclick="deletedata" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.info {
+  /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  justify-content: center;
+  /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #bbbbbb;
+}
+
+.e {
+  font-size: 25px;
+  color: #c9c9c9;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "@system.storage"
+import prompt from "@system.prompt"
+export default {
+  public: {
+    clickCount: 0
+  },
+  deletedata() {
+    this.clickCount += 1
+    if (this.clickCount === 5) {
+      const keysToDelete = ["cake", "money", "lastday","level","lastdayb"] // 添加需要删除的键
+      keysToDelete.forEach((key) => {
+        storage.delete({
+          key: key,
+        })
+      })
+    } 
+    else if (this.clickCount === 4) {
+      prompt.showToast({
+        message: "再点击1次将会清除数据",
+        duration: 1000
+      })
+    }
+    else if (this.clickCount === 3) {
+      prompt.showToast({
+        message: "再点击2次将会清除数据",
+        duration: 1000
+      })
+    }
+    else if (this.clickCount === 2) {
+      prompt.showToast({
+        message: "再点击3次将会清除数据",
+        duration: 1000
+      })
+    }else if (this.clickCount === 1) {
+      prompt.showToast({
+        message: "再点击4次将会清除数据",
+        duration: 1000
+      })
+    }
+  },
+  onInit() {
+    storage.get({
+      key: "cake",
+      success: (resca) => {
+        this.cake = resca ? parseInt(resca, 10) : 0
+      }
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  }
+}
+</script>

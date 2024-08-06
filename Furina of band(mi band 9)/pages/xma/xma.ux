@@ -1,0 +1,161 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="body column center">
+      <image class="icon "src="/common/icon/hi.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #aaaaaa;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+    texts: [
+    "我：哇，今天的阳光真好，坐在这里和你一起真是太幸福了，芙、芙芙。",
+    "芙芙：哈哈，谁、谁才不是因为阳光才开心呢！我、我只是感觉……有你在旁边，心情就特别好而已，嗯。",
+    "我：听你这么说，我就放心了。其实我也一直想和你一起做点什么，比如说，一起去海边散步，怎么样？",
+    "芙芙：海、海边？好、好像不错诶，虽然……水对我来说没什么特别的，但跟你在一起就不一样了。",
+    "我：是啊，跟你在一起所有事情都变得特别有趣！你知道吗，今天早上我遇到一只可爱的小狗，它让我想起了你。",
+    "芙芙：可、可爱的小狗……我、我才不是那种毛茸茸的小动物！哼，我是水神，有自己的魅力！",
+    "我：没错，没错！你是最美的水神，而我很幸运能和你在一起。记得你上次说的，那些关于水的故事吗？我觉得特别迷人。",
+    "芙芙：你、你真的觉得迷人吗？啊……这让我有点、呃，害羞。不过如果是为了你，我愿意再讲给你听。",
+    "我：当然啊，期待听你分享更多故事！对了，今天有没有特别想吃的东西？",
+    "芙芙：我……我想吃草莓蛋糕！可以吗？不过是、只是因为草莓的颜色看起来很可爱而已，不是因为你说的缘故哦！",
+    "我：哈哈，我知道你喜欢草莓。好，那我们去买草莓蛋糕，顺便散步！我请客，作为你男朋友的责任嘛。",
+    "芙芙：哼，才、才不是为了你才答应的……不过如果你真的请我吃蛋糕那就好，毕竟，谁让我是你的女朋友呢？",
+    "我：没错，芙芙，你是我最特别的女朋友！一起去，今天一定会很开心。",
+    "芙芙：嗯……说实话，我也期待能和你一起度过这个美好的时光。只要有你陪着我，就没有什么好怕的了。",
+    "我：我也是，芙芙，只要有你在身边，所有的烦恼都烟消云散了！",
+    "芙芙：哼，果然还是你最懂我！快点出发吧，我们要好好享受这一天。",
+    "我：走吧，芙芙，今天属于我们！最后送你件礼物，小米手环8Pro！"
+]
+,
+    xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

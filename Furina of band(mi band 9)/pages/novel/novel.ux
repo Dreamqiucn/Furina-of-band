@@ -1,0 +1,220 @@
+<template>
+<div  onswipe="toHomePage">
+<div class="page">
+    <text class="title">故事</text>
+    <div @click="rideap"><text class="b">规则</text></div>
+    
+    <list class="list" >
+      <list-item class="item center" type="custom" @click="first">
+        <text class="name">第一章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="juicea">
+        <text class="name">第二章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="goda">
+        <text class="name">第三章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="xza">
+        <text class="name">第四章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="watera">
+        <text class="name">第五章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="mza">
+        <text class="name">第六章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="wza">
+        <text class="name">第七章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="haira">
+        <text class="name">第八章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="novela">
+        <text class="name">第九章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="tha">
+        <text class="name">第十章</text>
+      </list-item>
+      <list-item class="item center" type="custom" @click="xma">
+        <text class="name">终章</text>
+      </list-item>
+    </list>
+  </div>
+</div>
+  
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+
+export default {
+  public: {
+    level: 0
+  },
+  onInit() {
+    storage.get({
+      key: "level",
+      success: (resC) => {
+        this.level = resC ? parseInt(resC, 10) : 5
+      }
+    })
+  },
+  rideap() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/ideap"
+    })
+  },
+  first() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 0){return}
+    router.replace({
+      uri: "/pages/first"
+    })
+  },
+  juicea() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 10){return}
+    router.replace({
+      uri: "/pages/juicea"
+    })
+  },
+  goda() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 20){return}
+    router.replace({
+      uri: "/pages/goda"
+    })
+  },
+  watera() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 40){return}
+    router.replace({
+      uri: "/pages/watera"
+    })
+  },
+  wza() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 60){return}
+    router.replace({
+      uri: "/pages/wza"
+    })
+  },
+  tha() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 90){return}
+    router.replace({
+      uri: "/pages/tha"
+    })
+  },
+  xza() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 30){return}
+    router.replace({
+      uri: "/pages/xza"
+    })
+  },
+  xma() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 100){return}
+    router.replace({
+      uri: "/pages/xma"
+    })
+  },
+  mza() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 50){return}
+    router.replace({
+      uri: "/pages/mza"
+    })
+  },
+  haira() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 70){return}
+    router.replace({
+      uri: "/pages/haira"
+    })
+  },
+  novela() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if(this.level < 80){return}
+    router.replace({
+      uri: "/pages/novela"
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  }
+}
+</script>
+
+<style>
+.b {
+  font-size: 25px;
+  color: #757575;
+  
+  margin-bottom: 60px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: center;
+  justify-content: center;
+ 
+  /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.title {
+  margin-top: 10px;
+  padding: 20px 0;
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.list {
+  flex: 1;
+  width: 340px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color:rgba(255, 255, 255, 0.2);
+}
+
+.image {
+  width: 128px;
+  flex: auto;
+  margin-left: 20px;
+}
+
+.name {
+  width: 100%;
+  font-size: 25px;
+  text-align: center;
+  color: #a3a3a3;
+}
+</style>

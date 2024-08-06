@@ -1,0 +1,173 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    
+    <div class="body column center">
+      <image class="icon "src="/common/icon/f.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #c9c9c9;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+      texts: [
+    "在阳光透过树叶洒下温暖的光影时，我和芙宁娜坐在枫丹歌剧院旁的一片绿意盎然的草地上，四周传来轻柔的水声，微风轻拂而过，这样的时光让人心情愉悦。",
+    "我：芙宁娜小姐，今天心情不错吗？阳光明媚的，真适合聊天。",
+    "芙宁娜：哼，当然，今天心情很好！不过，我今天可不是来闲聊的，我有个好东西要和你分享哦。",
+    "我：什么好东西？快告诉我！",
+    "芙宁娜：这是八重神子送给我的一本小说，在稻妻与枫丹建交的时候送给我的，叫《转世成为雷电将军然后天下无敌》。这本书有趣极了，你一定会喜欢的！",
+    "我：哇，听起来挺好！我知道雷电将军，那个稻妻的雷神，她很厉害吧？",
+    "芙宁娜：对，雷电将军是巅峰的存在，而且她还是个女生！故事里讲的是一个普通人转世到她的身体里，开始了她的传奇冒险。",
+    "我：哇，转世成为雷电将军，太酷了！那她在书里都做了些什么？",
+    "芙宁娜：呃，嗯……这个人一开始对自己的新身份感到很迷茫，不过很快就接受了，逐渐展现出雷电将军的威严和力量。在经历一系列战斗后，每次都能轻松胜利，真的很令人振奋！",
+    "我：太棒了！听起来真能激发人生的斗志。雷电将军可是很强大的角色，转世后的这个人会不会也变得很强呢？",
+    "芙宁娜：当然！转世之后，她的技能和能力完全觉醒，面对强敌，总是能找到克制的办法。她也有很多有趣的伙伴，一起经历了许多冒险。",
+    "我：伙伴们呢？他们在故事中有什么特别的角色？",
+    "芙宁娜：嗯，有几个伙伴都很有趣！其中有个叫羊毛卷的角色，她的头发是很卷的，非常可爱。还有个叫钟离的，他非常神秘，力量也很强，有很多智慧的策划。",
+    "我：听起来，他们的组合非常强大！我很喜欢这样的团队精神，转世成为雷电将军的故事里一定有许多精彩的瞬间吧？",
+    "芙宁娜：哦，对，有很多紧张刺激的打斗场面，还有深情流露的时刻，让人很感动，有时候我都忍不住想要流泪了……不过，我才没有在掉眼泪！",
+    "我：哈哈，我懂的，芙宁娜小姐，您一定是被那些情节打动了！我真的很想看看这些情节，您能多分享一点吗？",
+    "芙宁娜：好吧，那我就话多一点，嗯……每次雷电将军出战时，她的头发在风中飘扬，曲卷的发丝像极了你喜欢的那种风格，完美展现她的魅力与力量。",
+    "我：这让我想起您！您也有一头美丽的卷发，白色的短发在阳光下闪烁着光泽，真是太吸引眼球了。您和雷电将军有许多相似之处！",
+    "芙宁娜：呃……才、才不是呢！别把我和她拿来比较！我才不想和任何人相似，哼！不过……谢谢你夸我，我、我有点害羞。",
+    "我：您真是可爱，芙宁娜小姐！您的头发才是最美的，让人想一直凝视着。继续说那个故事吧！",
+    "芙宁娜：呃，好吧……在比赛中，雷电将军使用她的技能，召唤强大的雷电之力，强敌在她面前毫无还手之力！而在这过程中，她和伙伴之间的情感也渐渐升温……",
+    "我：那一定很感人吧，伙伴们一起面对困难的那种感觉，真的是让人心潮澎湃。",
+    "芙宁娜：是呀，故事深入人心，让我觉得很感动，有时我在想，要是我也能有这样的旅行就好了……不过，我才不需要任何援助，哼！",
+    "我：即使您不需要，您的故事也一样精彩！您已是无敌的水神，展示出了无比的力量和魅力，远胜于雷电将军。",
+    "芙宁娜：哈哈，看来你学会了如何来赞美我呢。好吧，我继续说下去，那雷电将军最终鼓起勇气，战胜了自己的敌人和内心的恐惧，成为真正的女神，带领国家逐步走向强盛。",
+    "我：这真是太励志了！我会好好记住这个故事的。还能借给我看看这本书吗？",
+    "芙宁娜：哼，你想要我的书？真是个贪心的小家伙！不过……为了你，可以借你一段时间，记得好好读哦！对了下一次也不要喊我芙宁娜小姐了，可以喊我芙芙，这样更亲密一些",
+    "我：收到，我最可爱的芙芙！",
+    
+],
+xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>

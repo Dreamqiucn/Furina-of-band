@@ -1,0 +1,220 @@
+<template>
+  <div class="download-page">
+    <div class="header column center">
+      <text class="a">Furina</text>
+      <text class="b">好感度 {{ level }}%</text>
+      
+    </div>
+
+    <div class="body column center">
+      <image class="icon" src="/common/icon/1.png"></image>
+    </div>
+    <div class="footer column center">
+      <div class="list row">
+        <input class="item column center" type="button" value="故事" style="font-size: 35px; color: #ffffff"
+          onclick="routePage5" />   
+        <input class="item column center" type="button" value="图鉴" style="font-size: 35px; color: #ffffff"
+          onclick="routePage4" />
+        </div>
+      <div class="list3 row">
+        <input class="item column center" type="button" value="祈愿" style="font-size: 35px; color: #ffffff"
+          onclick="routePage2" />
+        <input class="item column center" type="button" value="小蛋糕" style="font-size: 35px; color: #ffffff"
+          onclick="routePage3" />
+        </div>
+      <div class="list6 row">
+        <input class="item column center" type="button" value="关于" style="font-size: 35px; color: #ffffff"
+          onclick="routePage1" />
+        <input class="item column center" type="button" value="教程" style="font-size: 35px; color: #ffffff"
+          onclick="routePage6" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "@system.storage"
+
+export default {
+  public: {
+    a: 0, // 初始值设为0
+    lastday: 0, // 记录上一次的星期数
+    level: 0
+  },
+
+  onInit() {
+    const today = new Date()
+    const adjustedA = today.getDay() === 0 ? 7 : today.getDay() // 将星期数转换为1-7的格式
+
+    storage.get({
+      key: "lastday",
+      success: (resB) => {
+        this.lastday = resB ? parseInt(resB, 10) : 0 // 获取并设置 lastday
+        //如果 lastday 与 adjustedA 相等，说明今天已经更新过 level，不需要更新
+        //如果 lastday 是 6 且 adjustedA 是 7，说明今天是星期日，需要更新 level
+        if (adjustedA > this.lastday && adjustedA < 7) {
+          // 更新 lastday 和 level
+          storage.set({
+            key: "lastday",
+            value: adjustedA === 7 ? 0 : adjustedA.toString()
+            // 如果 adjustedA 是 7，说明今天是星期日，需要将 lastday 置为 0
+          })
+
+          storage.get({
+            key: "level",
+            success: (resA) => {
+              this.level = resA ? parseInt(resA, 10) : 0
+              this.level += 5
+              storage.set({
+                key: "level",
+                value: this.level.toString()
+              })
+            }
+          })
+        } 
+        else if(adjustedA === 7 && this.lastday === 6){
+          storage.set({
+            key: "lastday",
+            value: "0"
+          })
+          storage.get({
+            key: "level",
+            success: (resA) => {
+              this.level = resA ? parseInt(resA, 10) : 0
+              this.level += 5
+              storage.set({
+                key: "level",
+                value: this.level.toString()
+              })
+            }
+          })
+        }
+        else if (adjustedA === this.lastday || (adjustedA === 7 && this.lastday === 0)) {
+          // 不更新 level
+          storage.get({
+            key: "level",
+            success: (resC) => {
+              this.level = resC ? parseInt(resC, 10) : 5
+            }
+          })
+        }
+      }
+    })
+  },
+  routePage1() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/about"
+    })
+    
+  },
+  routePage2() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/ball"
+    })
+  },
+  routePage3() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/cake"
+    })
+  },
+  
+  routePage5() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+  },
+  routePage6() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/idea"
+    })
+  },
+
+  routePage4() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/photo"
+    })
+  }
+}
+</script>
+
+<style>
+.download-page {
+  display: grid;
+  flex-direction: column;
+  background-color: #000000;
+  height: 10px;
+  position: absolute;
+  width: 75%;
+  
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header {
+  margin-top: 20px;
+}
+
+.item {
+  /* 单个列表小东西 */
+  width: 45%;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.icon {
+  margin-top: 50px;
+  height: 75%;
+  margin-bottom: 1em;
+}
+.a {
+  font-size: 45px;
+}
+.b {
+  font-size: 30px;
+  color: #757575;
+}
+.data {
+  font-size: 15px;
+  color: #ffffff;
+}
+.list {
+  width: 95%;
+  height: 60px;
+  justify-content: space-around;
+  margin-top: 60px;
+  margin-bottom: 5px;
+}
+.list3 {
+  width: 95%;
+  justify-content: space-around;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.list6 {
+  width: 95%;
+  justify-content: space-around;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+</style>

@@ -1,0 +1,162 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+
+    <div class="body column center">
+      <image class="icon "src="/common/icon/hi.png"></image>            
+    </div>
+    <div class="column center"> 
+      <div class=" footer description">
+        <text class="b">{{ nowtext }}</text>
+      </div>        
+          <div class="footer">
+            <input class = "but" type="button" value="下一个" style="font-size: 30px;color: #ffffff;" @click="changeText" if="showOriginalButton">
+          <input class = "but" type="button" value="退出" style="font-size: 30px;color: #ffffff;" @click="routePage" if="showAnotherButton">             
+          </div>
+          
+    </div>
+    
+  </div>
+  
+</template>
+
+
+<style> 
+  .description {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 auto; /* Center align */
+    width: fit-content;
+    display: inline-block;
+}
+  
+
+.but{
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+.download-page {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+  text {
+  color: #ffffff;
+}
+.footer{
+  margin-top: 10px;
+}
+.column {              /* 竖直 */
+  flex-direction: column;
+}
+
+.row {                /* 水平 */
+  flex-direction: row;
+}
+.info {               /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.header{
+  margin-top: 20px;
+}
+.page {      
+  justify-content: center;           /* 页面大小 */
+  padding: 20px;
+  background-color: #000000;
+  flex:1;
+}
+.body {
+  margin-top: 10px;
+  
+}
+.icon {
+  width: 100%;
+  flex: 50%;
+  
+}
+.a{
+  font-size: 35px;
+}
+.b{
+  font-size: 25px;
+  color: #c9c9c9;
+
+}
+
+.e{
+  font-size: 25px;
+  color: #c9c9c9;
+}
+
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  export default {
+    public: {
+    texts: [
+      '我：哇！这、这是不是传说中的芙宁娜大人？我真的是见到您了！太兴奋了！',
+      '芙宁娜：哼，你这个人，竟然在这里大呼小叫，小声点，不要暴露我的身份！',
+      '我：当然知道！芙宁娜大人是水神，掌控水域与生命的伟大存在！能够见到您，简直是我的荣幸！您真的是太美丽了，像水面上闪烁的光芒一样！',
+      '芙宁娜：哼，这些夸奖的话你可不要随便说哦。虽然我知道我美丽，却不想让你这样的凡人觉得骄傲。',
+      '我：不不，我说的都是心里话！您是如此强大而优雅，真希望能向您学习一些神的力量。请问，您能给我一些指教吗？',
+      '芙宁娜：指教？哼，你真是有些天真，像你这样的小家伙，哪里需要考虑神的力量啊？不过……如果你真的求我，我可以考虑一下。',
+      '我：太好了，芙宁娜大人！您真是大方！我听说水神掌控着神秘的水之力，能创造和治理一切，您是如何做到的呢？',
+      '芙宁娜：这还用问？作为水神，当然要时刻与水的精华相融合，感知水流的奥妙与变化。不过，你可不能只想着得到这些力量哦，责任和义务也是不可或缺的。',
+      '我：我明白了，芙宁娜大人！力量不仅需要技巧，还需要责任。这让我对您更加崇拜了！为了能跟上您的脚步，我会更加努力学习的！',
+      '芙宁娜：哼，倒是个有志向的小家伙。只是，作为水神，我不希望在你面前显得太过亲近，你要记住，尊重是最重要的，明白吗？',
+      '我：当然，芙宁娜大人！我会永远尊敬您，永远铭记您的教诲！您在提瓦特的湖水中如同神一般存在，我无时无刻不在想念着您！',
+      '芙宁娜：你这家伙……怎么这么容易感情泛滥啊？真让人困扰。不过，看在你的崇拜份上，我可以允许你在湖畔多待一会儿。毕竟，这里可是我的领地。',
+      '我：太喜欢这个地方了，能和芙宁娜大人一同待在这里，真是我此生的梦想！芙宁娜大人，我送给你一个小蛋糕吧，猜你肯定很喜欢吃！',
+      '芙宁娜：看你这么热情，我有点不习惯。不过，虽然我看不惯你偶尔的言辞，但这份热情我还是收下了，那么我也给你一个回礼吧——我的《清涟》CD。',
+      '我：感谢芙宁娜大人！您竟然送给我这么珍贵的礼物！您简直是太大方了，我一定要努力成为像你一样的人。',
+      '芙宁娜：哼，嘴巴甜可没用，真正的实力才是最重要的。如果你真的想要让自己变得更强，就要磨炼自己，去感受水的力量！',
+      '我：好的，芙宁娜大人！我会好好努力的！为了能得到您的认可，我会不断挑战自己，刻苦训练，让自己不再是平凡的凡人！'
+    ],
+    xulie: 0,
+    showOriginalButton: true, // 控制原始按钮的显示
+    showAnotherButton: false // 控制另一个按钮的显示
+  },
+  routePage() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/novel"
+    })
+
+  },
+  computed: {
+    nowtext() {
+      return this.texts[this.xulie];
+    }
+  },
+  
+    changeText() {
+      this.xulie = (this.xulie + 1) % this.texts.length;
+      if (this.xulie === this.texts.length - 1) {
+        this.showOriginalButton = false; // 隐藏原始按钮
+        this.showAnotherButton = true; // 显示另一个按钮
+      }
+    },
+  
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/novel'
+        })
+      }
+    }
+  }
+</script>
