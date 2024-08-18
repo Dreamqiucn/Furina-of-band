@@ -56,7 +56,7 @@ export default {
         this.lastday = resB ? parseInt(resB, 10) : 0 // 获取并设置 lastday
         //如果 lastday 与 adjustedA 相等，说明今天已经更新过 level，不需要更新
         //如果 lastday 是 6 且 adjustedA 是 7，说明今天是星期日，需要更新 level
-        if (adjustedA > this.lastday && adjustedA < 7) {
+        if (adjustedA !== this.lastday && adjustedA < 7) {
           // 更新 lastday 和 level
           storage.set({
             key: "lastday",

@@ -9,7 +9,7 @@
         <image class="icon2" src="/common/logo.png" @click="Pagehh"></image>
         <div class="column">
           <text class ="b">腕上芙宁娜</text>
-          <text class ="c">版本:beta</text>
+          <text class ="c">版本:1.0.5</text>
         
         </div>
     </div>
