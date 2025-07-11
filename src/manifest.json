@@ -1,0 +1,84 @@
+{
+  "package": "com.Furina.Dreamqiu.cn",
+  "name": "腕上芙宁娜",
+  "versionName": "1.1.0",
+  "versionCode": 110,
+  "minPlatformVersion": 1000,
+  "icon": "/common/logo.png",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.storage"
+    }
+  ],
+  "config": {
+    "logLevel": "log",
+    "designWidth": 336,
+    "debug": true
+  },
+  "router": {
+    "entry": "pages/index",
+    "pages": {
+      "pages/index": {
+        "component": "index"
+      },
+      "pages/novel": {
+        "component": "novel"
+      },
+      "pages/novel_text": {
+        "component": "novel_text"
+      },
+      "pages/delete": {
+        "component": "delete"
+      },
+      "pages/photo_all": {
+        "component": "all"
+      },
+      "pages/ideap": {
+        "component": "ideap"
+      },
+      "pages/one": {
+        "component": "one"
+      },
+      "pages/idea": {
+        "component": "idea"
+      },
+      "pages/ball": {
+        "component": "ball"
+      },
+      "pages/cake": {
+        "component": "cake"
+      },
+      "pages/two": {
+        "component": "two"
+      },
+      "pages/three": {
+        "component": "three"
+      },
+      "pages/photo": {
+        "component": "photo"
+      },
+      "pages/about": {
+        "component": "about"
+      }
+    }
+  },
+  "packageInfo": {
+    "originType": "cmd",
+    "toolkit": "1.0.140",
+    "timeStamp": "2024-06-06T06:02:32.325Z",
+    "node": "v20.13.0",
+    "platform": "win32",
+    "arch": "x64",
+    "component": false
+  },
+  "minAPILevel": 1
+}
