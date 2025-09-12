@@ -1,0 +1,7 @@
+originType=cmd
+toolkit=1.0.19
+timeStamp=2024-06-06T06:02:32.325Z
+node=v20.13.0
+platform=win32
+arch=x64
+component=false

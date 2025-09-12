@@ -1,0 +1,473 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">探索</text>
+    </div>
+    <div class="body column center">
+      <image if="{{ vsphoto === true }}" class="icon" src="/common/icon/map.png"></image>
+      <text if="{{ vsphoto === false }}" class="c">
+        芙宁娜在探索中获得了甜甜和鸡腿{{ foodplus }}个
+      </text>
+    </div>
+    <div class="footer column center">
+      <div style="margin-top: 10px">
+        <input
+          if="{{ visible === true }}"
+          class="but"
+          type="button"
+          value="GO"
+          style="font-size: 30px; color: #ffffff"
+          onclick="handleButtonClick"
+        />
+        <text class="c" if="{{ visiblea === true }}">
+          正在游览大世界中...还有{{ timeLeft }}秒可再次游览
+        </text>
+        <div if="{{ visibleb === true }}" class="column center">
+          <text class="c">她去了{{ place }}，是否去看看？</text>
+          <div class="center">
+            <input
+              class="but1"
+              type="button"
+              value="YES"
+              style="font-size: 30px; color: #ffffff"
+              onclick="go"
+            />
+            <input
+              class="but2"
+              type="button"
+              value="NO"
+              style="font-size: 30px; color: #ffffff"
+              onclick="dontgo"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.but1 {
+  width: 40%;
+  background-color: rgba(115, 255, 115, 0.541);
+  border-radius: 30px;
+
+  margin-right: 5px;
+}
+
+.but2 {
+  width: 40%;
+  background-color: rgba(255, 115, 115, 0.637);
+  border-radius: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  justify-content: center;
+  /* 页面大小 */
+
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.icon {
+  width: 156px;
+  height: 156px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 30px;
+  color: #d1c5c5;
+}
+
+.c {
+  font-size: 30px;
+  color: #d8d8d8;
+}
+
+.e {
+  font-size: 35px;
+  color: #c9c9c9;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "../../common/storage.js"
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    timeLeft: 3, // 倒计时初始值（十秒）
+    timer: null,
+    today: 0,
+    lastdaye: 0,
+    time: 0,
+    adjustede: 0,
+    live: 1,
+    visible: true,
+    visibleb: false,
+    visiblea: false,
+    vsphoto: true,
+    foodplus: 0,
+    food: 0,
+    place: "",
+    couldback: true
+  },
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    storage.get({
+      key: "live",
+      success: (resaaa) => {
+        this.live = resaaa ? parseInt(resaaa, 10) : 1
+      }
+    })
+    storage.get({
+      key: "food",
+      success: (resaaa) => {
+        this.food = resaaa ? parseInt(resaaa, 10) : 0
+      }
+    })
+  },
+  find() {
+    if (this.live === 1) {
+      const randomNumber = Math.floor(Math.random() * 4) + 1
+      if (randomNumber === 1) {
+        this.startCountdown()
+      } else if (randomNumber === 2) {
+        this.flower()
+      } else if (randomNumber === 3) {
+        this.pig()
+      } else if (randomNumber === 4) {
+        this.bird()
+      }
+    } else {
+      prompt.showToast({
+        message: "芙宁娜牺牲了，请去冒险的配置界面复活芙宁娜",
+        duration: 2000
+      })
+    }
+  },
+  flower() {
+    this.visible = false // 隐藏按钮
+    this.visiblea = true // 显示倒计时
+    this.resetCountdown() // 确保每次开始时重置倒计时
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--
+      } else {
+        this.visiblea = true
+        this.resetCountdown()
+        prompt.showToast({
+          message: "芙宁娜遇到了骗骗花，即将前往相关界面",
+          duration: 1000
+        })
+        setTimeout(() => {
+          router.push({
+            uri: "/pages/maoxian_flower",
+            params: {
+              diren: "骗骗花"
+            }
+          })
+        }, 1000)
+      }
+    }, 1000)
+  },
+  pig() {
+    this.visible = false // 隐藏按钮
+    this.visiblea = true // 显示倒计时
+    this.resetCountdown() // 确保每次开始时重置倒计时
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--
+      } else {
+        this.visiblea = true
+        this.resetCountdown()
+        prompt.showToast({
+          message: "芙宁娜遇到了野猪，即将前往相关界面",
+          duration: 1000
+        })
+        setTimeout(() => {
+          router.push({
+            uri: "/pages/maoxian_flower",
+            params: {
+              diren: "野猪"
+            }
+          })
+        }, 1000)
+      }
+    }, 1000)
+  },
+  bird() {
+    this.visible = false // 隐藏按钮
+    this.visiblea = true // 显示倒计时
+    this.resetCountdown() // 确保每次开始时重置倒计时
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--
+      } else {
+        this.visiblea = true
+        this.resetCountdown()
+        prompt.showToast({
+          message: "芙宁娜遇到了鸟，即将前往相关界面",
+          duration: 1000
+        })
+        setTimeout(() => {
+          router.push({
+            uri: "/pages/maoxian_flower",
+            params: {
+              diren: "鸟"
+            }
+          })
+        }, 1000)
+      }
+    }, 1000)
+  },
+  startCountdown() {
+    this.visible = false // 隐藏按钮
+    this.visiblea = true // 显示倒计时
+    this.resetCountdown() // 确保每次开始时重置倒计时
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--
+      } else {
+        this.resetCountdown()
+        this.vsphoto = false
+        this.foodplus = this.getRandomInt(1, 3)
+        this.visiblea = false
+        this.visibleb = true
+        this.food += this.foodplus
+        storage.set({
+          key: "food",
+          value: this.food.toString()
+        })
+        const texts = [
+          "伊黎耶的旋舞",
+          "于秋分山远眺",
+          "西风大教堂",
+          "风之城",
+          "千船万商云集之地",
+          "玉京台",
+          "鸣神·离岛",
+          "远眺踏鞴之岛",
+          "一切智慧具足之城",
+          "双树控扼的港湾"
+        ] // 定义一个包含选项的数组
+        const randomIndex = Math.floor(Math.random() * texts.length) // 生成随机索引
+        const selectedText = texts[randomIndex] // 获取对应的文本
+        this.place = selectedText
+        // 根据随机选择的文本前往相应的界面
+      }
+    }, 1000)
+  },
+  dontgo() {
+    ;(this.visible = true), (this.visibleb = false), (this.visiblea = false), (this.vsphoto = true)
+  },
+  go() {
+    switch (this.place) {
+      case "伊黎耶的旋舞":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "伊黎耶的旋舞"
+          }
+        })
+        break
+      case "西风大教堂":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "西风大教堂"
+          }
+        })
+        break
+      case "风之城":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "风之城"
+          }
+        })
+        break
+      case "千船万商云集之地":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "千船万商云集之地"
+          }
+        })
+        break
+      case "玉京台":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "玉京台"
+          }
+        })
+        break
+      case "鸣神·离岛":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "鸣神·离岛"
+          }
+        })
+        break
+      case "远眺踏鞴之岛":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "远眺踏鞴之岛"
+          }
+        })
+        break
+      case "一切智慧具足之城":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "一切智慧具足之城"
+          }
+        })
+        break
+      case "双树控扼的港湾":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "双树控扼的港湾"
+          }
+        })
+        break
+      case "于秋分山远眺":
+        router.push({
+          uri: "/pages/photo_all",
+          params: {
+            which: "于秋分山远眺"
+          }
+        })
+        break
+    }
+
+    return selectedText // 返回随机选择的文本
+  },
+  resetCountdown() {
+    clearInterval(this.timer) // 清除之前的定时器
+    this.timeLeft = 10 // 重置倒计时时间
+  },
+  handleButtonClick() {
+    this.find()
+  },
+
+  toHomePage(eve) {
+    if (eve.direction === "right" && this.couldback === true) {
+      router.replace({
+        uri: "/pages/index_more"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index_more"
+    })
+  }
+}
+</script>

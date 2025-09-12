@@ -1,0 +1,170 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">关于</text>
+    </div>
+
+    <div class="body column center">
+      <div class="center">
+        <image class="icon2" src="/common/logo.png" @click="Pagehh"></image>
+      </div>
+      <div class="column">
+        <text class="b">腕上芙宁娜</text>
+        <text class="c">版本:1.1.0</text>
+      </div>
+    </div>
+    <div class="footer column">
+      <div style="margin-top: 10px">
+        <text class="d">开发人员:</text>
+      </div>
+      <text class="e">@ Dreamqiu</text>
+
+      <div style="margin-top: 10px">
+        <text class="d">鸣谢:</text>
+      </div>
+      <text class="e">Bandbbs.cn</text>
+      <text class="d">此版本为1.1免费原版,Pro版本售价3.5￥,新增以下功能</text>
+      <text class="d">欢迎扫描二维码购买</text>
+      <text class="d"></text>
+
+      <text class="d">相较于免费版更新的内容有：</text>
+      <text class="d">1. 冒险模式</text>
+      <text class="d">2. 无尽模式（排行榜功能）</text>
+      <text class="d">3. 突发事件</text>
+      <text class="d">4. 故事新增10章</text>
+      <text class="d">5. 增加官方剧情4.2罪人舞步旋（可自定义旅行者名字）</text>
+      <text class="d">6. 图鉴增加10张</text>
+      <text class="d">7. 探索/采集</text>
+      <text class="d">8. 烹饪</text>
+      <text class="d">9. 芙宁娜打招呼</text>
+      <text class="d">10. BOSS挑战</text>
+      <text class="d">11. 芙宁娜Wiki百科</text>
+      <text class="d">12. 更改旅行者名字</text>
+      <text class="d">13. 自定义增加相遇之缘数目</text>
+      <text class="d">14. UI整体优化</text>
+      <text class="d">15. 加强的抽卡系统（可抽取武器及命之座）</text>
+      <text class="d">16. 武器配置</text>
+      <text class="d">17. 命之座</text>
+      <text class="d">18. 委托</text>
+      <text class="d">购买链接</text>
+
+      <qrcode
+        value="https://afdian.com/item/7f6a402c812311efa1bf5254001e7c00"
+        style="color: black"
+      ></qrcode>
+      <text class="d">安装教程</text>
+
+      <qrcode
+        value="https://www.bilibili.com/opus/1052333185858273287"
+        style="color: black"
+      ></qrcode>
+      <text class="d"></text>
+      <text class="d"></text>
+    </div>
+  </div>
+</template>
+
+<style>
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  /* 页面大小 */
+
+  background-color: #000000;
+  width: 192px;
+  height: 490px;
+}
+
+.body {
+  margin-top: 0px;
+}
+
+.footer {
+  margin-top: 0px;
+  margin-left: 15px;
+}
+
+.icon2 {
+  width: 96px;
+  height: 96px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+  margin-left: 20px;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 20px;
+}
+
+.d {
+  font-size: 25px;
+  color: #999999;
+}
+
+.e {
+  font-size: 25px;
+  color: #ffffff;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  Pagehh() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/delete"
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  }
+}
+</script>

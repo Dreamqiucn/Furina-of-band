@@ -1,0 +1,295 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">清除数据</text>
+      <text class="b">点击五次按钮，即可清除所有数据</text>
+      <text class="b">此操作不可恢复！</text>
+    </div>
+
+    <div class="footer column center">
+      <input
+        class="but1"
+        type="button"
+        value="清除"
+        style="font-size: 30px; color: #ffffff"
+        onclick="deletedata"
+      />
+      <text class="a">进入界面修复小米手环10存储bug问题(新用户/修复过的用户无需在意)</text>
+      <input
+        class="but1"
+        type="button"
+        value="同步"
+        style="font-size: 30px; color: #ffffff"
+        onclick="push"
+      />
+      <text class="a">“相遇之缘” {{ money }}个</text>
+      <text class="b">为使游戏体验更好，体验时间更长，希望您不要点击</text>
+      <input
+        class="but1"
+        type="button"
+        value="增加"
+        style="font-size: 30px; color: #ffffff"
+        @click="ball"
+      />
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.but1 {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.but {
+  width: 75%;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  /* 页面大小 */
+
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.a {
+  font-size: 25px;
+}
+
+.b {
+  font-size: 20px;
+  color: #bbbbbb;
+}
+
+.e {
+  font-size: 25px;
+  color: #c9c9c9;
+}
+</style>
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "@system.storage"
+import prompt from "@system.prompt"
+export default {
+  public: {
+    clickCount: 0,
+    money: 0,
+    tfs: 0,
+    mxlv: 0,
+    jys: 0,
+    cishu: 0
+  },
+  push() {
+    router.replace({
+      uri: "/pages/sync"
+    })
+  },
+  ball() {
+    this.money += 10
+    storage.set({
+      key: "money",
+      value: this.money.toString()
+    })
+  },
+  deletedata() {
+    this.clickCount += 1
+    if (this.clickCount === 5) {
+      const keysToDelete = [
+        "cake",
+        "numberthing",
+        "food",
+        "j",
+        "uncake",
+        "money",
+        "level",
+        "jys",
+        "tfs",
+        "mxlv",
+        "alv",
+        "qlv",
+        "elv",
+        "aka",
+        "ake",
+        "akq",
+        "cishu",
+        "live",
+        "blood",
+        "nstf",
+        "nsjy",
+        "nsalv",
+        "nsqlv",
+        "nselv",
+        "nsaka",
+        "nsake",
+        "nsakq",
+        "nsblood",
+        "nslv",
+        "jieduan",
+        "mostjieduan",
+        "name",
+        "wx",
+        "stone",
+        "fourStarPity",
+        "inventory",
+        "refinement",
+        "usedCodes",
+        "wt"
+      ] // 添加需要删除的键
+      keysToDelete.forEach((key) => {
+        storage.delete({
+          key: key
+        })
+      })
+    } else if (this.clickCount === 4) {
+      prompt.showToast({
+        message: "再点击1次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 3) {
+      prompt.showToast({
+        message: "再点击2次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 2) {
+      prompt.showToast({
+        message: "再点击3次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 1) {
+      prompt.showToast({
+        message: "再点击4次将会清除数据",
+        duration: 1000
+      })
+    }
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    storage.get({
+      key: "money",
+      success: (resca) => {
+        const parsedMoney = parseInt(resca, 10)
+        this.money = !Number.isNaN(parsedMoney) ? parsedMoney : 0
+      }
+    })
+    orage.get({
+      key: "tfs",
+      success: (resca) => {
+        this.tfs = resca ? parseInt(resca, 10) : 0
+      }
+    })
+    storage.get({
+      key: "cishu",
+      success: (resca) => {
+        this.cishu = resca ? parseInt(resca, 10) : 0
+      }
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index_about"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index_about"
+    })
+  }
+}
+</script>

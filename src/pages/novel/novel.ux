@@ -1,0 +1,267 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="page">
+      <text class="title">故事</text>
+      <div @click="idea"><text class="b">规则</text></div>
+
+      <list class="list" bounces="true">
+        <list-item class="item center" type="custom" @click="first">
+          <text class="name">第一章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="juicea">
+          <text class="name">第二章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="goda">
+          <text class="name">第三章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xza">
+          <text class="name">第四章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="watera">
+          <text class="name">第五章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="mza">
+          <text class="name">第六章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="wza">
+          <text class="name">第七章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="haira">
+          <text class="name">第八章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="novela">
+          <text class="name">第九章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="tha">
+          <text class="name">第十章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xma">
+          <text class="name">第一部分-终章</text>
+        </list-item>
+      </list>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    level: 0
+  },
+  onInit() {
+    storage.get({
+      key: "level",
+      success: (resC) => {
+        this.level = resC ? parseInt(resC, 10) : 5
+      }
+    })
+  },
+  idea() {
+    router.replace({
+      uri: "/pages/ideap"
+    })
+  },
+  first() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_text",
+      params: {
+        which: "第一章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  juicea() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 10) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_text",
+      params: {
+        which: "第二章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  goda() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 20) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_text",
+      params: {
+        which: "第三章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  watera() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 40) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_text",
+      params: {
+        which: "第五章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  wza() {
+    if (this.level < 60) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第七章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  tha() {
+    if (this.level < 90) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第十章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xza() {
+    if (this.level < 30) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第四章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xma() {
+    if (this.level < 100) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第一部分-终章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  mza() {
+    if (this.level < 50) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第六章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  haira() {
+    if (this.level < 70) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第八章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  novela() {
+    if (this.level < 80) return
+    router.push({
+      uri: "/pages/novel_text",
+      params: {which: "第九章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index"
+    })
+  }
+}
+</script>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.b {
+  font-size: 30px;
+  color: #757575;
+
+  margin-bottom: 10px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: center;
+  justify-content: center;
+
+  /* 页面大小 */
+  background-color: #000000;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.title {
+  margin-top: 10px;
+  font-size: 35px;
+  color: #ffffff;
+}
+
+.list {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.item {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.image {
+  width: 128px;
+  flex: auto;
+  margin-left: 20px;
+}
+
+.name {
+  width: 100%;
+  font-size: 30px;
+  text-align: center;
+  color: #a3a3a3;
+}
+</style>

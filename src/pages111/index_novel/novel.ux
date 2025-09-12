@@ -1,0 +1,405 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="page">
+      <text class="title">故事</text>
+      <div @click="idea"><text class="b">规则</text></div>
+
+      <list class="list" bounces="true">
+        <list-item class="item center" type="custom" @click="first">
+          <text class="name">第一章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="juicea">
+          <text class="name">第二章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="goda">
+          <text class="name">第三章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xza">
+          <text class="name">第四章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="watera">
+          <text class="name">第五章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="mza">
+          <text class="name">第六章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="wza">
+          <text class="name">第七章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="haira">
+          <text class="name">第八章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="novela">
+          <text class="name">第九章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="tha">
+          <text class="name">第十章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xma">
+          <text class="name">第一部分-终章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="qc">
+          <text class="name">第十一章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="md">
+          <text class="name">第十二章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="mda">
+          <text class="name">第十三章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="ly">
+          <text class="name">第十四章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="lya">
+          <text class="name">第十五章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="dq">
+          <text class="name">第十六章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="dqa">
+          <text class="name">第十七章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xmx">
+          <text class="name">第十八章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xmxa">
+          <text class="name">第十九章</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="last">
+          <text class="name">第二部分-终章</text>
+        </list-item>
+      </list>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "../../common/storage.js"
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    level: 0
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    storage.get({
+      key: "level",
+      success: (resC) => {
+        this.level = resC ? parseInt(resC, 10) : 5
+      }
+    })
+  },
+  idea() {
+    router.push({
+      uri: "/pages/index_ideaall",
+      params: {
+        rule: "第一部分：当好感度到达5,10,20...90,100时，会分别解锁新的故事和新的物品，每个故事与物品是一一对应的。\n第二部分：当好感度到达110,120,130...190,200时，会分别解锁新的故事和新的地理志"
+      }
+    })
+  },
+  first() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_person",
+      params: {
+        which: "第一章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  juicea() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 10) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_person",
+      params: {
+        which: "第二章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  goda() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 20) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_person",
+      params: {
+        which: "第三章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  watera() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 40) {
+      return
+    }
+    router.push({
+      uri: "/pages/novel_person",
+      params: {
+        which: "第五章",
+        __PARAM_LAUNCH_FLAG___: "clearTask"
+      }
+    })
+  },
+  wza() {
+    if (this.level < 60) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第七章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  tha() {
+    if (this.level < 90) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xza() {
+    if (this.level < 30) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第四章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xma() {
+    if (this.level < 100) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第一部分-终章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  mza() {
+    if (this.level < 50) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第六章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  haira() {
+    if (this.level < 70) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第八章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  novela() {
+    if (this.level < 80) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第九章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  md() {
+    if (this.level < 120) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十二章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  qc() {
+    if (this.level < 110) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十一章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  ly() {
+    if (this.level < 140) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十四章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  dq() {
+    if (this.level < 160) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十六章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  dqa() {
+    if (this.level < 170) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十七章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xmx() {
+    if (this.level < 180) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十八章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  xmxa() {
+    if (this.level < 190) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十九章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  lya() {
+    if (this.level < 150) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十五章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  mda() {
+    if (this.level < 130) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第十三章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+  last() {
+    if (this.level < 200) return
+    router.push({
+      uri: "/pages/novel_person",
+      params: {which: "第二部分-终章", __PARAM_LAUNCH_FLAG___: "clearTask"}
+    })
+  },
+
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index_story"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index_story"
+    })
+  }
+}
+</script>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.b {
+  font-size: 30px;
+  color: #757575;
+
+  margin-bottom: 10px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: center;
+  justify-content: center;
+
+  /* 页面大小 */
+  background-color: #000000;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.title {
+  margin-top: 10px;
+  font-size: 35px;
+  color: #ffffff;
+}
+
+.list {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.item {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.image {
+  width: 128px;
+  flex: auto;
+  margin-left: 20px;
+}
+
+.name {
+  width: 100%;
+  font-size: 30px;
+  text-align: center;
+  color: #a3a3a3;
+}
+</style>

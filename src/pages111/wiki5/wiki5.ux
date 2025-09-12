@@ -1,0 +1,193 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">Wiki</text>
+    </div>
+    <div class="header column center">
+      <text class="b">生日2024</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">啊，你来的这么早，我还没有收拾好呢。</text>
+      <text class="d">你是说我今天的妆造很不错吗？那肯定，乌瑟勋爵的手艺可从来没出过差错。</text>
+      <text class="d">既然你都提早过来了，不如，我让它们也给你做个造型如何？</text>
+      <text class="d">
+        今天这么重要的日子，如果我们能一起盛装出席的话…哼哼，所有人都要移不开眼咯~
+      </text>
+    </div>
+    <div class="header column center">
+      <text class="b">人物考据</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">
+        芙卡洛斯（Focalors）一名取自所罗门七十二柱魔神之一，佛卡洛（Focalor），排名第四十一席，位阶为公爵，领导着地狱30支军团。
+      </text>
+      <text class="d">
+        有许多传说描述佛卡洛在堕落前曾是一名座天使，而堕落后的他受到欺骗，期待着千年以后能重返高天。
+      </text>
+      <text class="d">
+        在《所罗门的小钥匙》中，佛卡洛被描述成是下身和躯干是拥有狮鹫羽翼的狮鹫兽、上身是人类男性的形象。
+      </text>
+      <text class="d">他拥有驾驭海洋与狂风的力量，喜欢掀翻船舶或是直接将人们丢入水中溺毙。</text>
+      <text class="d">
+        召唤佛卡洛的人通常会迎合他的喜好使某人或某船殒于海中，但若下达不许伤害他人的命令，佛卡洛虽然不满但也会遵守。
+      </text>
+
+      <text class="d">芙宁娜（Furina）是公元前一世纪时古罗马的一位泉水女神。</text>
+      <text class="d">
+        法国语言学家乔治·杜梅吉尔推测Furina一词与水的流动或是水泡有关，它与哥特语的brunna（英语spring，泉水）和拉丁语的fervēre（英语effervescent，起泡的）同源。
+      </text>
+      <text class="d">她在罗马拥有一处圣泉和一座神殿，位于贾尼科洛山的西南坡上。</text>
+
+      <text class="d">枫丹（Fontaine）是法语中“泉水”的意思。</text>
+
+      <text class="d">
+        芙宁娜在普攻和重击时是左手持剑。而在欧洲，右手执权杖是皇权的象征，而左手拿权杖则代表正义。
+      </text>
+
+      <text class="d">其六个命座全部与歌剧有关：</text>
+      <text class="d">
+        「爱是难驯鸟，哀乞亦无用。」来自1845年法国现实主义作家梅里美的短篇小说《卡门》，1874年由法国作曲家比才将其改编为同名歌剧。
+      </text>
+      <text class="d">
+        「女人皆善变，仿若水中萍。」来自1850-1851年意大利作曲家威尔第创作的歌剧《弄臣》。
+      </text>
+      <text class="d">
+        「秘密藏心间，无人知我名。」和「我已有觉察，他名即是…！」均来自1921-1924年意大利歌剧作曲家普契尼创作的歌剧《图兰朵》，该歌剧直到其离世都未能完成。
+      </text>
+      <text class="d">
+        「若非处幽冥，怎知生可贵！」来自1858年德籍法国作曲家奥芬巴赫的管弦乐曲《地狱中的奥菲欧》。
+      </text>
+      <text class="d">
+        「诸君听我颂，共举爱之杯！」来自1848年法国作家小仲马的长篇小说《茶花女》，后由威尔第将其改编为同名歌剧。
+      </text>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 25px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/wiki"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/wiki"
+    })
+  }
+}
+</script>

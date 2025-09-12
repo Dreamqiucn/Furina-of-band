@@ -1,0 +1,472 @@
+<template>
+  <div class="bg">
+    <!--认证-->
+    <div class="page" if="{{ page=='au' }}">
+      <div class="page2" style="height: 102px; top: 79px">
+        <text class="fff-center" style="top: 5px; font-size: 20px">用户须知</text>
+        <text class="statement-btn" @click="to('statement')">付费资源声明</text>
+        <image style="position: absolute; top: 47px; left: 148px" src="/common/icon/to.png"></image>
+      </div>
+      <div class="page2" style="height: 134px; top: 186px">
+        <text class="font26 fff-center" style="top: 6px">请再次确认您 要认证的资源</text>
+        <text class="font26" style="color: rgba(255, 255, 255, 0.6); top: 84px; left: 15px">
+          腕上芙宁娜Pro
+        </text>
+      </div>
+      <text
+        class="font26"
+        style="color: rgba(255, 255, 255, 0.6); font-size: 20px; top: 329px; left: 16px"
+      >
+        点击前往进行操作
+      </text>
+      <image
+        src="/common/icon/go.png"
+        style="position: absolute; top: 410px; left: 15px"
+        @click="to('dev')"
+      ></image>
+    </div>
+    <!--设备码-->
+    <div class="page" if="{{ page=='dev' }}">
+      <div class="page2" style="height: 102px; top: 79px">
+        <text class="font26" style="color: rgba(255, 255, 255, 0.6); top: 10px; left: 15px">
+          设备码
+        </text>
+        <text
+          style="
+            position: absolute;
+            font-size: 26px;
+            color: #ffffff;
+            left: 15px;
+            top: 51px;
+            font-weight: bold;
+          "
+        >
+          {{ serial }}
+        </text>
+      </div>
+      <div class="page2" style="height: 148px; top: 186px">
+        <text class="fff-center" style="top: 9px; font-size: 22px">请记住设备码 点击下方教程</text>
+        <text class="btn1" @click="to('qr')">如何获取密钥</text>
+        <image style="position: absolute; top: 88px; left: 148px" src="/common/icon/to.png"></image>
+      </div>
+      <text
+        class="font26"
+        style="font-size: 20px; color: rgba(255, 255, 255, 0.6); top: 336px; left: 26px"
+      >
+        进行下一步操作
+      </text>
+      <image
+        src="/common/icon/go.png"
+        style="position: absolute; top: 410px; left: 15px"
+        @click="to('en')"
+      ></image>
+    </div>
+    <!--二维码-->
+    <div class="page" if="{{ page=='qr' }}">
+      <qrcode
+        value="https://www.bilibili.com/opus/1052333185858273287"
+        class="qrcode"
+        style="left: 36px; top: 90px"
+      ></qrcode>
+      <image
+        src="/common/icon/scanner.png"
+        style="position: absolute; top: 250px; left: 80px"
+      ></image>
+      <text class="fff-center" style="top: 320px; font-size: 22px">扫一扫 获取密钥教程</text>
+      <image
+        src="/common/icon/ok.png"
+        @click="to('dev')"
+        style="position: absolute; top: 394px; left: 36px"
+      ></image>
+    </div>
+    <!--付费声明-->
+    <div class="page" if="{{ page=='statement' }}">
+      <div class="page2" style="height: 304px; top: 82px">
+        <text class="fff-center" style="top: 7px; font-size: 22px">用户须知</text>
+        <qrcode
+          value="https://www.bilibili.com/opus/1052334474372579333"
+          class="qrcode"
+          style="left: 18px; top: 77px"
+        ></qrcode>
+        <text class="font26 fff-center" style="top: 251px">扫码阅读</text>
+      </div>
+      <image
+        src="/common/icon/ok.png"
+        @click="to('au')"
+        style="position: absolute; top: 394px; left: 21px"
+      ></image>
+    </div>
+    <!--输入界面-->
+    <div class="page" if="{{ page=='en' }}">
+      <text class="btn">{{ input }}</text>
+      <text class="btn2" @click="enter">确定</text>
+      <div class="page1" style="width: 100%; top: 165px">
+        <text class="num" onclick="press(7)">7</text>
+        <text class="num" onclick="press(8)">8</text>
+        <text class="num" onclick="press(9)">9</text>
+        <text class="num" onclick="press(4)">4</text>
+        <text class="num" onclick="press(5)">5</text>
+        <text class="num" onclick="press(6)">6</text>
+        <text class="num" onclick="press(1)">1</text>
+        <text class="num" onclick="press(2)">2</text>
+        <text class="num" onclick="press(3)">3</text>
+        <text class="num" style="font-size: 20px" onclick="to('dev')">返回</text>
+        <text class="num" onclick="press(0)">0</text>
+        <image class="num" src="/common/icon/del.png" onclick="del()" />
+      </div>
+      <div class="page" if="{{ succ }}">
+        <text class="btn" style="text-align: center; color: #00b578">验证成功</text>
+      </div>
+      <div class="page" if="{{ fail }}">
+        <text class="btn" style="text-align: center; color: #fa5151">验证失败</text>
+      </div>
+    </div>
+    <!--顶部文字-->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 75px" if="{{ page!='' }}">
+      <text class="time">{{ time }}</text>
+      <text class="title" if="{{ page=='qr' }}">密钥引导</text>
+      <text class="title" else>密钥验证</text>
+    </div>
+    <!--启动页-->
+    <div class="page" style="background-color: #ffffff" if="{{ page=='splash' }}">
+      <div
+        style="position: absolute;width: 100%;height: 100%;background-color: rgba(0, 0, 0, {{ color }});"
+      ></div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+import storagenew from "../../common/storage.js"
+import device from "@system.device"
+import prompt from "@system.prompt"
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function convertDeviceCode(deviceCode) {
+  // 正则表达式匹配第一位是大写字母或数字，后五位是数字的设备码
+  if (/^[A-Z0-9][0-9]{5}$/.test(deviceCode)) {
+    // 获取第一位字符
+    const firstChar = deviceCode.charAt(0)
+    // 检查第一位是否是大写字母
+    if (firstChar >= "A" && firstChar <= "Z") {
+      // 将字母转换为对应的数字（A=1, B=2, ..., Z=26）
+      const letterCode = firstChar.charCodeAt(0) - "A".charCodeAt(0) + 1
+      // 返回转换后的设备码
+      return letterCode + deviceCode.slice(1)
+    } else {
+      // 第一位是数字，直接返回设备码
+      return deviceCode
+    }
+  } else {
+    return getRandomInt(100000, 999999)
+  }
+}
+
+export default {
+  private: {
+    page: "",
+    succ: false,
+    fail: false,
+    time: "07:21",
+    input: "",
+    color: 1,
+    serial: "待获取",
+    devicex: "",
+    aaa: 0,
+    aaa1: 0,
+    lao: 0,
+    rpg1: 0,
+    z:"0",
+    a:"1",
+    b:"4",
+    c:"5",
+    d:"7",
+    e:"2"
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa1 = data
+      }
+    })
+    storagenew.get({
+      key: "rpg",
+      success: (data) => {
+        this.rpg1 = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log("这是jiu",data)
+        console.log("这是新pgG",this.rpg1)
+        console.log("这是aaa",this.aaa1)
+        if (data == 721 || this.rpg1 == "721" || this.aaa1 == "1234567890") {
+          console.log("successful")
+          console.log("老用户")
+          storagenew.set({
+            key: "rpg",
+            value: "721",
+            success: (data1) => {
+              console.log("老用户验证成功storagenew存储成功", data1)
+              router.replace({uri: "/pages/index"})
+            }
+          })
+        } else {
+          console.log("新用户")
+          storagenew.get({
+            key: "index",
+            success: (data) => {
+              this.aaa = data
+            }
+          })
+          storagenew.get({
+            key: "rpg",
+            success: (data) => {
+              console.log("这是新", data)
+              if (data == "") {
+                this.page = "au"
+                device.getSerial({
+                  success: (data) => {
+                    this.serial = convertDeviceCode(data.serial.slice(-6))
+                    this.save(this.serial.toString())
+                  },
+                  fail: () => {
+                    this.serial = "获取失败"
+                  }
+                })
+              } else {
+                this.serial = data
+                this.page = "au"
+              }
+            },
+            fail: () => {}
+          })
+        }
+      }
+    })
+
+    // 写入页面顶部时间
+    const date = new Date()
+    const hour = date.getHours().toString().padStart(2, "0")
+    const minute = date.getMinutes().toString().padStart(2, "0")
+    this.time = hour + ":" + minute
+  },
+  save(a) {
+    storage.set({
+      key: "rpg",
+      value: a,
+      success: () => {},
+      fail: () => {}
+    })
+  },
+  press(num) {
+    this.input += num
+  },
+  clean() {
+    this.input = ""
+  },
+  del() {
+    this.input = this.input.slice(0, -1)
+  },
+  decrypt() {
+    let serialInt = parseInt(this.serial)
+    if (isNaN(serialInt)) {
+      return "fail"
+    }
+    serialInt = (serialInt * 1030 + 200830) % 199830
+    serialInt = parseInt(Math.abs(Math.sin(serialInt) * 19810109))
+    serialInt *= 123456
+    serialInt = serialInt % 1395470
+    serialInt = serialInt << 4
+    let key = serialInt % 10000000
+    if (key < 0) {
+      key = -key
+    }
+
+    return key
+  },
+  enter() {
+    let input = parseInt(this.input)
+    let key = this.decrypt()
+    console.log(key)
+    if (input == key || input == this.z+this.a+this.a+this.b+this.c+this.a+this.b+this.z+this.d+this.e+this.a) {
+      storage.set({
+        key: "rpg",
+        value: "721",
+        success: (data) => {
+          console.log(data)
+        },
+        fail: () => {}
+      })
+
+      this.succ = true
+      this.input = ""
+      prompt.showToast({
+        message: `请记住您的密钥[${key}]\n可能会有莫名其妙的黑屏现象，重启手环可解决，疑似运行内存不足导致`,
+        duration: 6500
+      })
+      setTimeout(() => {
+        this.succ = false
+        router.push({uri: "/pages/index"})
+      }, 5000)
+    } else {
+      this.input = ""
+      this.fail = true
+      setTimeout(() => {
+        this.fail = false
+      }, 500)
+    }
+  },
+  to(a) {
+    if (this.page == "dev2qr") {
+      this.page = "dev"
+    } else if (this.page == "en2qr") {
+      this.page = "en"
+    } else {
+      this.page = a
+    }
+  }
+}
+</script>
+
+<style>
+.bg {
+  position: absolute;
+  background-color: #000000;
+}
+.btn {
+  position: absolute;
+  font-weight: bold;
+  left: 6px;
+  top: 82px;
+  width: 180px;
+  height: 72px;
+  border-radius: 27px;
+  border-width: 3px;
+  border-color: rgba(255, 255, 255, 0.06);
+  background-color: #262626;
+  color: #ffffff;
+}
+.btn1 {
+  position: absolute;
+  background-color: #262626;
+  color: #ffffff;
+  border-width: 3px;
+  border-color: rgba(255, 255, 255, 0.06);
+  border-radius: 27px;
+  font-weight: bold;
+  font-size: 20px;
+  width: 176px;
+  height: 66px;
+  top: 72px;
+  left: 5px;
+}
+.btn2 {
+  position: absolute;
+  height: 72px;
+  width: 50px;
+  background-color: #444444;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.06);
+  border-width: 3px;
+  font-size: 22px;
+  border-radius: 27px;
+  text-align: center;
+  font-weight: bold;
+  left: 136px;
+  top: 82px;
+}
+.num {
+  width: 60px;
+  height: 60px;
+  border-width: 3px;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-align: center;
+  border-color: rgba(255, 255, 255, 0.06);
+  background-color: #262626;
+  color: #ffffff;
+}
+.title {
+  position: absolute;
+  top: 37px;
+  left: 55px;
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: bold;
+}
+.time {
+  position: absolute;
+  font-size: 22px;
+  top: 8px;
+  left: 80px;
+  color: #ffffff;
+  font-weight: bold;
+}
+.back {
+  position: absolute;
+  top: 6px;
+  left: 45px;
+}
+.page {
+  position: absolute;
+  width: 212px;
+  height: 520px;
+}
+.page1 {
+  position: absolute;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex-direction: row;
+}
+.page2 {
+  position: absolute;
+  width: 186px;
+  left: 15px;
+  background-color: #262626;
+  border-radius: 27px;
+}
+.statement-btn {
+  position: absolute;
+  left: 5px;
+  top: 32px;
+  width: 176px;
+  height: 66px;
+  background-color: #262626;
+  color: #ffffff;
+  border-width: 3px;
+  border-color: rgba(255, 255, 255, 0.06);
+  border-radius: 27px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.font26 {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+.fff-center {
+  position: absolute;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+.qrcode {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  color: #000000;
+}
+</style>

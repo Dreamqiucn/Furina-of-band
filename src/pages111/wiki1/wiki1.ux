@@ -1,0 +1,161 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">Wiki</text>
+    </div>
+    <div class="header column center">
+      <text class="b">个人信息</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">称号：不休独舞</text>
+      <text class="d">全名/本名：芙宁娜·德·枫丹（Furina de Fontaine）</text>
+      <text class="d">所在国家：枫丹</text>
+      <text class="d">种族：人类</text>
+      <text class="d">性别：女</text>
+      <text class="d">稀有度：5星</text>
+      <text class="d">常驻/限定：限定UP</text>
+      <text class="d">神之眼：水</text>
+      <text class="d">武器类型：单手剑</text>
+      <text class="d">始基力：荒性、芒性</text>
+      <text class="d">命之座：司颂座</text>
+      <text class="d">特殊料理：「普茹斯蒂司」</text>
+      <text class="d">生日：10月13日</text>
+      <text class="d">实装日期：2023年11月08日（4.2版本）</text>
+      <text class="d">UP次数：3次</text>
+      <text class="d">中文CV:钱琛</text>
+      <text class="d">专武：静水流涌之辉</text>
+      <text class="d">
+        TAG：治疗、伤害提升、受治疗加成提升、水下探索便利、生命损耗、能量恢复、自身倍率附加、自身伤害提升、特殊元素附魔
+      </text>
+      <text class="d">介绍：审判舞台上的绝对焦点，直至谢幕的掌声响起。</text>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 25px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/wiki"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/wiki"
+    })
+  }
+}
+</script>

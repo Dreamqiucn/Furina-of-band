@@ -1,0 +1,603 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <scroll if="{{ which != '兑换无尽材料' }}" class="column box" scroll-y="true" bounces="true">
+      <div class="header column center">
+        <text class="b"></text>
+      </div>
+      <div class="header column center">
+        <text class="b">{{ which }}</text>
+        <text class="b">介绍</text>
+      </div>
+      <div class="description footer column center">
+        <image class="icon" src="{{ img }}"></image>
+        <text class="b">当前拥有： {{ currentCount }}</text>
+        <text class="b">精炼等级：{{ jinglian }}/5</text>
+        <input
+          class="but column center"
+          type="button"
+          value="精炼"
+          style="font-size: 30px; color: #ffffff"
+          onclick="refineWeapon"
+          if="{{ currentCount > 0 && jinglian < 5 }}"
+        />
+        <input
+          class="but column center"
+          type="button"
+          value="装备"
+          style="font-size: 30px; color: #ffffff"
+          onclick="equipWeapon"
+        />
+        <text class="d">{{ whichtext }}</text>
+        <text class="d">{{ whichmore }}</text>
+      </div>
+    </scroll>
+    <scroll if="{{ which == '兑换无尽材料' }}" class="column box" scroll-y="true" bounces="true">
+      <div class="header column center">
+        <text class="b"></text>
+      </div>
+      <div class="header column center">
+        <text class="e">当所有无尽材料精炼满后，可以兑换</text>
+        <text class="e">1把4星=>500无尽经验天赋书</text>
+        <text class="e">1把五星=>2000无尽经验天赋书</text>
+        <div class="description footer column center">
+          <text if="{{ allRefined }}">✓ 所有武器已精炼满级</text>
+          <text if="{{ !allRefined }}">X 请先将所有武器精炼到5级</text>
+        </div>
+      </div>
+      <div class="description footer column center">
+        <text>当前无尽天赋书: {{ nstf }}</text>
+        <text>当前无尽经验书: {{ nsjy }}</text>
+        <input
+          class="but column center"
+          type="button"
+          value="兑换多余武器"
+          style="font-size: 30px; color: #ffffff"
+          onclick="exchange"
+        />
+        <!-- <input
+          class="but column center"
+          type="button"
+          value="设置测试数据"
+          style="font-size: 30px; color: #ffffff"
+          onclick="change1"
+        /> -->
+        <text class="d">{{ exchangeMessage }}</text>
+      </div>
+    </scroll>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 0.7;
+}
+
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.description {
+  border: 3px solid rgba(255, 255, 255, 0.06);
+  border-radius: 36px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.icon {
+  width: 75%;
+  height: auto;
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  padding: 10px;
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 35px;
+  color: #999999;
+  margin-left: 20px;
+}
+
+.d {
+  font-size: 20px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+// 导入模块
+import router from "@system.router"
+import storage from "../../common/storage.js"
+import prompt from "@system.prompt"
+// 武器配置
+const WEAPON_CONFIG = {
+  静水流涌之辉: {key: "zhuanwu", icon: "zhuanwu.png", star: 5},
+  船坞长剑: {key: "changjian", icon: "changjian.png", star: 4},
+  水仙十字剑: {key: "shuixian", icon: "shuixian.png", star: 4},
+  灰河渡手: {key: "huihe", icon: "huihe.png", star: 4},
+  祭礼剑: {key: "jlj", icon: "jlj.png", star: 4}
+}
+
+export default {
+  private: {
+    img: "",
+    which: "",
+    whichtext: "",
+    whichmore: "",
+    currentCount: 0,
+    jinglian: 0,
+    weaponKey: "",
+    nsjy: 0,
+    nstf: 0,
+    allRefined: false, // 新增：所有武器是否精炼满级
+    exchangeMessage: "" // 新增：兑换结果消息
+  },
+
+  // 精炼方法（已修复）
+  refineWeapon() {
+    storage.get({
+      key: "inventory",
+      success: (inventoryData) => {
+        storage.get({
+          key: "refinement",
+          success: (refineData) => {
+            // 解析数据
+            const inventory = JSON.parse(inventoryData || "{}")
+            const refinement = JSON.parse(refineData || "{}")
+
+            // 获取当前值
+            const currentCount = inventory[this.weaponKey] || 0
+            const currentRefine = refinement[this.weaponKey] || 0
+
+            // 验证库存
+            if (currentCount < 1 || currentRefine >= 5) {
+              console.log("无法精炼")
+              return
+            }
+
+            // 更新数据
+            inventory[this.weaponKey] = currentCount - 1
+            refinement[this.weaponKey] = currentRefine + 1
+
+            // 保存数据
+            storage.set({
+              key: "inventory",
+              value: JSON.stringify(inventory),
+              success: () => {
+                this.currentCount = inventory[this.weaponKey]
+                storage.set({
+                  key: "refinement",
+                  value: JSON.stringify(refinement),
+                  success: () => {
+                    this.jinglian = refinement[this.weaponKey]
+                    this.$forceUpdate()
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    })
+  },
+
+  // 装备方法（保持原有）
+  equipWeapon() {
+    if (this.currentCount < 1 && this.jinglian < 1) {
+      console.log("没有武器")
+      prompt.showToast({
+        message: "没有武器"
+      })
+      return
+    }
+    storage.set({
+      key: "currentWeapon",
+      value: this.weaponKey,
+      success: () => {
+        console.log(`已装备：${this.which}`)
+        console.log(this.weaponKey)
+        // 可以添加提示效果
+        prompt.showToast({
+          message: "装备成功"
+        })
+      }
+    })
+  },
+
+  // 初始化方法（优化后）
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    // 初始化武器信息
+    if (this.which != "兑换无尽材料") {
+      const config = WEAPON_CONFIG[this.which]
+      this.weaponKey = config.key
+      this.img = `/common/icon/${config.icon}`
+
+      // 加载库存数据
+      storage.get({
+        key: "inventory",
+        success: (data) => {
+          const inventory = JSON.parse(data || "{}")
+          this.currentCount = inventory[this.weaponKey] || 0
+          this.$forceUpdate()
+        }
+      })
+
+      // 加载精炼数据
+      storage.get({
+        key: "refinement",
+        success: (data) => {
+          const refinement = JSON.parse(data || "{}")
+          this.jinglian = refinement[this.weaponKey] || 0
+          this.$forceUpdate()
+        }
+      })
+
+      // 初始化武器描述
+      this.initWeaponDescription()
+    } else {
+      storage.get({
+        key: "nstf",
+        success: (res) => {
+          this.nstf = parseInt(res, 10) || 0
+        }
+      })
+      storage.get({
+        key: "nsjy",
+        success: (res) => {
+          this.nsjy = parseInt(res, 10) || 0
+        }
+      })
+
+      // 检查所有武器是否精炼满级
+      this.checkAllRefined()
+    }
+  },
+  checkAllRefined() {
+    storage.get({
+      key: "refinement",
+      success: (refineData) => {
+        const refinement = JSON.parse(refineData || "{}")
+        let allRefined = true
+
+        // 检查所有武器的精炼等级
+        for (const weaponName in WEAPON_CONFIG) {
+          const weaponKey = WEAPON_CONFIG[weaponName].key
+          if ((refinement[weaponKey] || 0) < 5) {
+            allRefined = false
+            break
+          }
+        }
+
+        this.allRefined = allRefined
+        this.$forceUpdate()
+      }
+    })
+  },
+  exchange() {
+    // 检查是否所有武器都精炼满级
+    if (!this.allRefined) {
+      prompt.showToast({
+        message: "请先将所有武器精炼到5级"
+      })
+      return
+    }
+
+    storage.get({
+      key: "inventory",
+      success: (inventoryData) => {
+        const inventory = JSON.parse(inventoryData || "{}")
+        let totalExchange = 0
+        let exchangeDetails = []
+
+        // 遍历所有武器
+        for (const weaponName in WEAPON_CONFIG) {
+          const weaponConfig = WEAPON_CONFIG[weaponName]
+          const weaponKey = weaponConfig.key
+          const currentCount = inventory[weaponKey] || 0
+
+          // 计算可兑换的数量（超过0的部分）
+          if (currentCount > 0) {
+            const exchangeCount = currentCount
+            const exchangeValue = weaponConfig.star === 5 ? 2000 : 500
+            const weaponExchange = exchangeCount * exchangeValue
+
+            totalExchange += weaponExchange
+            inventory[weaponKey] = 0
+
+            exchangeDetails.push(
+              `${weaponName}: ${exchangeCount}把 => ${weaponExchange}无尽经验天赋书`
+            )
+          }
+        }
+
+        if (totalExchange > 0) {
+          // 更新天赋书数量
+          this.nsjy += totalExchange
+          this.nstf += totalExchange
+
+          // 保存数据
+          storage.set({
+            key: "inventory",
+            value: JSON.stringify(inventory),
+            success: () => {
+              storage.set({
+                key: "nstf",
+                value: this.nstf.toString()
+              })
+              storage.set({
+                key: "nsjy",
+                value: this.nsjy.toString()
+              })
+
+              // 显示兑换结果
+              this.exchangeMessage =
+                `成功兑换${totalExchange}无尽经验天赋书\n` + exchangeDetails.join("\n")
+              prompt.showToast({
+                message: "兑换成功"
+              })
+              this.$forceUpdate()
+            }
+          })
+        } else {
+          this.exchangeMessage = "没有多余武器可兑换"
+          prompt.showToast({
+            message: "没有多余武器可兑换"
+          })
+        }
+      }
+    })
+  },
+  // change() {
+  //   storage.get({
+  //     key: "inventory",
+  //     success: (data) => {
+  //       console.log(data)
+  //       const inventory = JSON.parse(data || "{}")
+
+  //       // 创建减到5后的新对象
+  //       this.every = {}
+  //       for (const key in inventory) {
+  //         if (inventory.hasOwnProperty(key)) {
+  //           let value = inventory[key]
+  //           // 将值减少到5（如果大于5）
+  //           if (value > 5) {
+  //             value = 5
+  //           }
+  //           this.every[key.toString()] = value
+  //           console.log(this.every)
+
+  //           // 根据键名增加 a
+  //           if (key === "zhuanwu") {
+  //             this.nsjy += 2000
+  //             this.nstf += 2000
+  //           } else {
+  //             this.nsjy += 500
+  //             this.nstf += 500
+  //           }
+  //         }
+  //         this.e
+  //       }
+
+  //       // 条件判断（使用原始 inventory 值）
+  //       if (
+  //         inventory["zhuanwu"] >= 6 &&
+  //         inventory["changjian"] >= 6 &&
+  //         inventory["shuixian"] >= 6 &&
+  //         inventory["huihe"] >= 6 &&
+  //         inventory["jlj"] >= 6
+  //       ) {
+  //         this.bt = true
+  //       } else {
+  //         this.bt = false
+  //       }
+  //       storage.set({
+  //         key: "nstf",
+  //         value: this.nstf.toString()
+  //       })
+  //       storage.set({
+  //         key: "nsjy",
+  //         value: this.nsjy.toString()
+  //       })
+  //     }
+  //   })
+  // },
+  change1() {
+    // 设置测试数据：所有武器精炼5级，库存7把
+    const testInventory = {
+      shuixian: 7,
+      zhuanwu: 7,
+      changjian: 7,
+      huihe: 7,
+      jlj: 7
+    }
+
+    const testRefinement = {
+      shuixian: 5,
+      zhuanwu: 5,
+      changjian: 5,
+      huihe: 5,
+      jlj: 5
+    }
+
+    storage.set({
+      key: "inventory",
+      value: JSON.stringify(testInventory),
+      success: () => {
+        storage.set({
+          key: "refinement",
+          value: JSON.stringify(testRefinement),
+          success: () => {
+            this.allRefined = true
+            this.exchangeMessage = "测试数据已设置\n所有武器精炼5级\n每把武器库存7个"
+            prompt.showToast({
+              message: "测试数据设置成功"
+            })
+            this.$forceUpdate()
+          }
+        })
+      }
+    })
+  },
+  // 初始化武器描述（优化后）
+  initWeaponDescription() {
+    const descriptions = {
+      静水流涌之辉: {
+        text: "武器技能 - 湖光的朝与暮\n全数值提升10%/15%/20%/25%/30%；当装备者的生命值降低20%时，装备者的生命值提升10%/12%/15%/17%/19%。",
+        more: "武器介绍\n萦绕着至纯之水的权杖，在遥远的昔日曾象征着海原之上至高的权威。"
+      },
+      船坞长剑: {
+        text: "武器技能 - 船工号子\n生命值提升10%/15%/20%/25%/30%。元素战技命中敌人时，将产生「宏大诗篇」效果：额外造成100%/120%/140%/160%/180%攻击力的伤害，该效果有30%几率触发。",
+        more: "武器介绍\n如今几乎绝迹的便利切割工具，能够随着使用将钝化的刀片换掉。"
+      },
+      水仙十字剑: {
+        text: "武器技能 - 勇者之剑\n普通攻击攻击命中时，会释放芒性或荒性的能量冲击，造成120%/140%/160%/180%/200%攻击力的伤害。该效果有30%几率触发，能量冲击的类型由水仙十字之剑当前的属性决定。",
+        more: "武器介绍\n意志与力量随故事的结束而消褪的长剑，它将要再次踏上新的旅途。其中残余着一些力量，纪念着一场宏大的梦。"
+      },
+      灰河渡手: {
+        text: "武器技能 - 铁骨\n攻击力变成110%/120%/130%/140%/150%.施放元素战技E技能可叠1.5层Q技能。",
+        more: "武器介绍\n在过去曾经被当作武器使用的趁手废弃铜管，曾经在一些人当中享有盛名或是臭名昭著。"
+      },
+      祭礼剑: {
+        text: "武器技能 - 气定神闲\n元素战技造成伤害时，有10%/20%/30%/40%/50%概率造成双倍伤害。",
+        more: "武器介绍 \n在漫长岁月中石化的道具剑，上面的仪式性装饰依然清晰可见。拥有受时间之风冲刷的祝福力量。"
+      }
+    }
+
+    if (descriptions[this.which]) {
+      this.whichtext = descriptions[this.which].text
+      this.whichmore = descriptions[this.which].more
+    }
+  },
+
+  // 页面返回方法
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/maoxian_gan"
+      })
+    }
+  },
+
+  // 返回按钮方法
+  back() {
+    router.replace({
+      uri: "/pages/maoxian_gan"
+    })
+  }
+}
+</script>

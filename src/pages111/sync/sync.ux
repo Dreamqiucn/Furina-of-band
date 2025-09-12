@@ -1,0 +1,343 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header center">
+      <text class="title">存储转移</text>
+    </div>
+    <text class="title1">
+      为修复环10存储问题,使用了新的存储函数,当前正在进行数据转移,请点击列表中的42项来转移数据以实现BUG修复(当手环内存高于80MB时可能有会无法读取数据.请减少内存)
+    </text>
+    <list class="list1" bounces="true">
+      <list-item class="item center" type="costom" for="{{ keys }}" @click="read($item.key)">
+        <div class="center">
+          <text class="subject-name">{{ $idx + 1 }}</text>
+        </div>
+      </list-item>
+      <list-item class="item center" type="costom" @click="save">
+        <div class="center">
+          <text class="subject-name">确定完成同步</text>
+        </div>
+      </list-item>
+      <list-item class="item1 center" type="costom" @click="save">
+        <div class="center"></div>
+      </list-item>
+      <list-item class="item1 center" type="costom" @click="save">
+        <div class="center"></div>
+      </list-item>
+      <list-item class="item1 center" type="costom" @click="save">
+        <div class="center"></div>
+      </list-item>
+    </list>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+import prompt from "@system.prompt"
+import storagenew from "../../common/storage.js"
+
+export default {
+  public: {
+    keys: [
+      {key: "index", x: null},
+      {key: "rpg", x: null},
+      {key: "cake", x: null},
+      {key: "numberthing", x: null},
+      {key: "goaway", x: null},
+      {key: "food", x: null},
+      {key: "j", x: null},
+      {key: "uncake", x: null},
+      {key: "money", x: null},
+      {key: "level", x: null},
+      {key: "jys", x: null},
+      {key: "tfs", x: null},
+      {key: "mxlv", x: null},
+      {key: "alv", x: null},
+      {key: "qlv", x: null},
+      {key: "elv", x: null},
+      {key: "aka", x: null},
+      {key: "ake", x: null},
+      {key: "akq", x: null},
+      {key: "cishu", x: null},
+      {key: "live", x: null},
+      {key: "blood", x: null},
+      {key: "nstf", x: null},
+      {key: "nsjy", x: null},
+      {key: "nsalv", x: null},
+      {key: "nsqlv", x: null},
+      {key: "nselv", x: null},
+      {key: "nsaka", x: null},
+      {key: "nsake", x: null},
+      {key: "nsakq", x: null},
+      {key: "nsblood", x: null},
+      {key: "nslv", x: null},
+      {key: "jieduan", x: null},
+      {key: "mostjieduan", x: null},
+      {key: "name", x: null},
+      {key: "wx", x: null},
+      {key: "stone", x: null},
+      {key: "fourStarPity", x: null},
+      {key: "inventory", x: null},
+      {key: "refinement", x: null},
+      {key: "usedCodes", x: null},
+      {key: "wt", x: null}
+    ]
+  },
+  save() {
+    console.log("全部完成")
+    storagenew.set({
+      key: "synced",
+      value: "success"
+    })
+    prompt.showToast({
+      message: "同步完成",
+      duration: 2000
+    })
+    this.back()
+  },
+  read(z) {
+    storage.get({
+      key: z,
+      success: (data) => {
+        this.keys.forEach((item) => {
+          if (item.key === z) {
+            item.x = data
+          }
+        })
+
+        storagenew.set({
+          key: z,
+          value: data,
+          success: () => {
+            console.log("同步成功")
+            prompt.showToast({
+              message: "同步成功请点击下一项",
+              duration: 200
+            })
+          }
+        })
+      }
+    })
+  },
+  onInit() {
+    console.log(this.keys)
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "验证失败",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+          prompt.showToast({
+            message: "验证失败",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/lock"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/lock"
+    })
+  }
+}
+</script>
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(182, 182, 182, 0.2);
+  color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+  flex-direction: column;
+}
+
+.page {
+  background-color: #000000;
+  width: 100%;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 30px;
+
+  color: #ffffff;
+}
+
+.c {
+  font-size: 30px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 20px;
+  color: #adadad;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+@import "./more.less";
+
+.list {
+  width: 100%;
+  height: 100%;
+}
+.list1 {
+  width: 100%;
+  height: 80%;
+}
+
+.item {
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.item1 {
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  background-color: rgb(0, 0, 0);
+}
+.title1 {
+  color: #ffffffab;
+  font-size: 23px;
+  margin-top: 5px;
+}
+.title {
+  color: #ffffff;
+  font-size: 25px;
+  margin-top: 5px;
+}
+.list-item-title {
+  font-size: 36px;
+  color: white;
+}
+
+.list-item {
+  height: 70px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.subject-image {
+  width: 45px;
+  height: 45px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.subject-name {
+  font-size: 30px;
+  font-weight: 400;
+  align-items: center;
+  color: #fff;
+}
+</style>

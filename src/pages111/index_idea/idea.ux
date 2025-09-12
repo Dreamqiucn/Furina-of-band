@@ -1,0 +1,317 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">玩法/教程</text>
+    </div>
+
+    <div class="header column center">
+      <text class="b">简要介绍</text>
+    </div>
+
+    <div class="description footer column center">
+      <text class="d">这是一个养成类的vela快应用游戏。你可以通过签到，吃小蛋糕来获得好感度。</text>
+      <text class="d">
+        好感度达到一定值会解锁芙宁娜的一些小物品在“图鉴”里，和解锁一些新的“故事”
+      </text>
+      <text class="d">你可以通过“冒险”，获得经验书，天赋书，升级你的芙宁娜</text>
+    </div>
+    <div class="header column center">
+      <text class="b">详细功能介绍</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">
+        1.签到 每天打开一次此程序，则好感度会自动增加5，并且增加十个“相遇之缘”到“祈愿”界面
+      </text>
+      <text class="d">
+        2.（i）相遇之缘祈愿（武器池）
+        通过原石进行祈愿，160一抽，十连消耗1600原石（原石通过无尽模式每关可获得20）。当已抽数小于75时，五星概率为0.6%；当大于等于75时，每抽数五星概率增加6%。四星概率恒为5%"
+        （ii）纠缠之缘祈愿（常驻池）
+        点击“祈愿”按钮，会有三种出“小蛋糕”（普茹斯蒂司），经验书和天赋书的可能，概率最大的为出一个“小蛋糕”经验书，天赋书，其次为两个，概率最小为出三个
+      </text>
+      <text class="d">
+        3.小蛋糕 祈愿中获得的小蛋糕，在“小蛋糕”界面可以吃掉，吃掉后，会获得5%好感度
+      </text>
+      <text class="d">
+        4.故事
+        故事有官方剧情和我个人做的剧情两种，官方剧情是4.2“罪人舞步旋”的剧情，官方剧情可以没有好感度限制，个人故事随好感度的增加而解锁，其内容我是让ChatGPT写的，所以内容可能不太正常，我不会写这种故事什么的，并且工作量太大了，所以让人工智能写了，详细规则请看“故事”界面
+      </text>
+      <text class="d">
+        5.图鉴
+        好感度达到一定值后，在图鉴界面会解锁芙宁娜的一些小物品，详细规则请看“图鉴”界面，点击小物品可以查看小物品的详细介绍
+      </text>
+      <text class="d">
+        6.冒险
+        每天会获得三次计划冒险，冒险会遇到丘丘人，丘丘暴徒，丘丘王等等，完成会获得经验书，天赋书，详细请看“冒险”界面的“规则”
+      </text>
+      <text class="d">7.探险 探险有几率遇到骗骗花，野猪，鸟，战斗胜利后可获得甜甜花和鸡腿</text>
+      <text class="d">
+        8.烹饪
+        可以将10个“致水神”转换为1个“普茹斯蒂司”，也可以将探险探险到的“甜甜花”和“鸡腿”转换为1个“甜甜花酿鸡”，可在战斗时回复血量
+      </text>
+      <text class="d">
+        9.突发事件 每天有三次机会，共有28种事件，不同事件有不同的结果，突发事件有几率触发一个彩蛋
+      </text>
+      <text class="d">
+        10.无尽模式
+        无尽模式的天赋书经验书等级天赋与普通模式不同，天赋书经验书只能通过打怪获得，无尽模式会遇到普通敌人和BOSS，共有12种敌人，胜利后会获得20原石
+      </text>
+      <text class="d">
+        11.芙宁娜的打招呼 在首页点击芙宁娜她会给你打招呼，称呼名在可以在"更改名字"界面修改
+      </text>
+      <text class="d">
+        12.武器
+        进入“冒险”页面，有武器配置选项，进入后可进行配置，不同武器有不同的功能，武器通过纠缠之缘武器池祈愿获得。武器可以精炼，精炼会消耗一把武器，对数值进行提升，精炼最高为五阶。装备武器是对冒险普通模式与无尽模式同时进行配置的。
+      </text>
+      <text class="d">
+        13.兑换码
+        在“兑换码”界面，可以兑换原石。兑换码可以通过加入爱发电电圈或加入QQ频道获得，爱发电电圈每两周发一次。在QQ频道节日附近时会发放兑换码，节日的兑换码只有在当天可用。
+        本次版本更新兑换码【3.5codefurina】
+      </text>
+      <text class="d">
+        14.清除数据方法
+        打开“关于”页面，点击芙宁娜图标，进入界面，点击“清除数据”按钮五次，即可清除本程序后台所有数据，好感度，小蛋糕，纠缠之缘等
+      </text><text class="d">
+          15.命之座
+          命之座无特殊功能，但代表了你对芙宁娜的爱，无上限等级，真爱党可以无脑冲,在“全部”-“角色配置"-”命之座“进入
+        </text>
+    </div>
+    <div class="header column center">
+      <text class="b">更新日志</text>
+    </div>
+    <div class="description footer column">
+            <text class="c">Version 3.6 2025.7.20</text>
+        <text class="d">—— 更新命之座抽取功能</text>
+        <text class="d">—— 增加”角色配置“界面，内含”属性“”武器“”命之座“</text>
+        <text class="d">—— 部分UI优化</text>
+        
+      <text class="c">Version 3.5 2025.6.7</text>
+      <text class="d">—— 更新排行榜 增加封号功能 禁止恶意利用bug刷榜</text>
+      <text class="d">—— 增加多余武器兑换无尽模式材料功能</text>
+      <text class="d">—— 无尽模式吞星之鲸削弱</text>
+      <text class="d">—— 无尽模式前期数值上调</text>
+      <text class="d">—— WIKI新增“角色故事”</text>
+
+      <text class="c">Version 3.4 2025.5.31</text>
+      <text class="d">—— 更新无尽模式属性备份功能</text>
+      <text class="d">—— 战斗开局改为需一次普攻释放E技能</text>
+      <text class="d">—— 战斗普通模式前期数值下调</text>
+      <text class="d">—— 无尽模式前期数值上调</text>
+
+      <text class="c">Version 3.3 2025.5.3</text>
+      <text class="d">—— 更新“委托”功能</text>
+      <text class="d">—— 灰河渡手bug修复</text>
+      <text class="d">—— 静水流涌之辉bug修复</text>
+      <text class="d">—— 再次修复Nan bug</text>
+      <text class="d">—— 部分UI优化</text>
+      <text class="d">—— 页面整合优化</text>
+      <text class="d">—— 小米手环8Pro及9更新排行榜 同步器Powered by@芝士雪豹</text>
+
+      <text class="c">Version 3.2 2025.4.5</text>
+      <text class="d">—— 更新“新”祈愿 之前的纠缠之缘=>相遇之缘，现在的纠缠之缘可抽取武器</text>
+      <text class="d">—— 更新无尽模式胜利后获得20原石</text>
+      <text class="d">—— 更新“武器”功能</text>
+      <text class="d">—— 小米手环9Pro更新无尽模式排行榜</text>
+      <text class="d">—— 更新“兑换码”功能</text>
+      <text class="d">—— 部分UI优化</text>
+      <text class="d">—— 无尽模式属性一键升级功能</text>
+      <text class="d">—— 冒险普通模式属性清空数据功能</text>
+      <text class="d">—— NAN bug修复，NAN的经验书天赋书自动转换为无尽阶段数的三倍</text>
+
+      <text class="c">Version 3.1 2025.3.8</text>
+      <text class="d">
+        —— 更新战斗界面“荒性芙宁娜”（白芙）长按普攻切换，恢复血量为E技能伤害三分之一
+      </text>
+      <text class="d">—— 更新“图鉴”界面骗骗花，野猪，鸟，甜甜花，甜甜花酿鸡</text>
+      <text class="d">
+        —— “探索”界面增加有几率遇到野猪，鸟，骗骗花，战斗胜利后可获得甜甜花和鸡腿
+      </text>
+      <text class="d">—— 整体UI优化</text>
+      <text class="d">—— 多页面整合，优化代码</text>
+      <text class="d">—— 改动:为防止页面逻辑问题，主页不可右滑退出</text>
+
+      <text class="c">Version 3.0 2025.1.25</text>
+      <text class="d">—— 更新“无尽模式”</text>
+      <text class="d">—— 更新“突发事件”内容</text>
+      <text class="d">—— 更新“Boss挑战”内容</text>
+      <text class="d">—— 更新“芙宁娜向你问好”</text>
+      <text class="d">—— 更新官方4.2“罪人舞步旋”剧情</text>
+      <text class="d">—— 更新“战斗”机制，怪物种类，数值增加</text>
+
+      <text class="c">Version 2.1.0 2025.1.1（未正式发布）</text>
+      <text class="d">—— 更新“烹饪”界面</text>
+      <text class="d">—— 更新“wiki”界面</text>
+      <text class="d">—— 更新“探险”界面</text>
+      <text class="d">—— 更新部分界面UI</text>
+      <text class="d">—— 更改 “战斗次数3次” 改为 “6次”</text>
+      <text class="d">—— 更改 “经验书”1个升1级</text>
+      <text class="d">—— 优化战斗卡顿</text>
+      <text class="d">—— 丘丘人数值调高</text>
+      <text class="d">—— 增加“更新日志”</text>
+
+      <text class="c">Version 2.0.0 2024.10.3 Pro版本发布</text>
+      <text class="d">—— 更新“故事”内容</text>
+      <text class="d">—— 更新“图鉴”内容</text>
+      <text class="d">—— 更新“冒险”界面</text>
+      <text class="d">—— 更新部分界面UI</text>
+      <text class="d">—— 适配红米手表，小米手表S系列</text>
+      <text class="c">Version 1.0.0 2024.7.31 原版发布</text>
+
+      <text class="c">BUG问题</text>
+      <text class="d">
+        有时会出现好感度，小蛋糕，纠缠之缘，冒险次数等为0的情况，解决方案为第二天打开就好了，其原因没找到，大概为手表性能不足导致的
+      </text>
+      <text class="d">
+        小米手环9Pro战斗界面图片有时为乱码，已修复，原因为8Pro与9Pro分辨率的略微差异
+      </text>      <text class="d">小米手环10会有莫名其妙的黑屏现象，重启手环可解决，疑似运行内存不足导致</text>
+
+      <text class="d">突发事件bug增加5%好感度类似的事件会使好感度变成5%的bug，已修复</text>
+      <text class="d">
+        战斗的属性界面有时经验书或天赋书数值变成Nan，这个没有办法解决，原因我也不清楚，可能是手环性能不足导致的，已修复
+      </text>
+      <text class="d">特别感谢@liuyuze61的帮助！</text>
+      <text class="d">该项目原版为免费的，此版本为Pro版，感谢你的支持!</text>
+      <text class="d">本项目的“突发事件”和“芙宁娜问好”的灵感来着@AOKAI，感谢所有人的支持！</text>
+      <text class="d">更多BUG请添加QQ频道反馈</text>
+
+      <qrcode class="qrcode" value="https://pd.qq.com/s/hjfgjy677"></qrcode>
+      <qrcode class="qrcode" value="https://pd.qq.com/s/hjfgjy677"></qrcode>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.info {
+  /* 一块区域 */
+  width: 272px;
+  margin-top: 0px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  /* 页面大小 */
+
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #ffffff;
+  margin-left: 30px;
+  margin-top: 15px;
+}
+
+.d {
+  font-size: 20px;
+  color: #c5c5c5;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index"
+    })
+  }
+}
+</script>

@@ -1,0 +1,234 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">Wiki</text>
+    </div>
+    <div class="header column center">
+      <text class="b">天赋</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">普通攻击·独舞之邀</text>
+
+      <text class="d">普通攻击</text>
+      <text class="d">进行至多四段的连续攻击。</text>
+
+      <text class="d">重击</text>
+      <text class="d">
+        消耗一定体力，释放独舞的气场，对附近的敌人造成物理伤害，并切换自身的始基力属性。
+      </text>
+      <text class="d">
+        如果场上存在元素战技「孤心沙龙」召唤的「沙龙成员」或「众水的歌者」，「沙龙成员」或「众水的歌者」也会更换为对应的阵容。
+      </text>
+
+      <text class="d">始基力：圣俗杂座</text>
+      <text class="d">
+        每隔一段时间，芙宁娜的普通攻击命中时，将根据芙宁娜当前的始基力属性，在命中的位置降下灵息之刺或流涌之刃，造成具有芒性或荒性的水元素伤害。
+      </text>
+      <text class="d">芙宁娜登场时，始基力属性为荒性。</text>
+
+      <text class="d">下落攻击</text>
+      <text class="d">从空中下坠冲击地面，攻击下落路径上的敌人，并在落地时造成范围伤害。</text>
+
+      <text class="d">孤心沙龙</text>
+      <text class="d">描述</text>
+      <text class="d">
+        邀请孤心沙龙的客人们上阵，为芙宁娜的演出助兴。根据芙宁娜当前的始基力属性，邀请的客人分为「沙龙成员」与「众水的歌者」。
+      </text>
+
+      <text class="d">荒性</text>
+      <text class="d">
+        挥洒欢庆的泡沫，基于芙宁娜的生命值上限，造成水元素范围伤害，并召唤三位「沙龙成员」：球球章鱼形态的「乌瑟勋爵」、泡泡海马形态的「海薇玛夫人」和重甲蟹形态的「谢贝蕾妲小姐」。
+      </text>
+      <text class="d">
+        「沙龙成员」将间歇性攻击附近的敌人，并优先攻击当前场上角色的目标，基于生命值上限，造成水元素伤害。
+      </text>
+      <text class="d">
+        「沙龙成员」进行攻击时，根据附近的队伍中生命值高于50%的角色数量，提升此次攻击的威力，并消耗这些角色的生命值。
+      </text>
+      <text class="d">
+        满足条件的角色数量为1/2/3/4名或更多时，攻击造成的伤害为原本的110%/120%/130%/140%。
+      </text>
+
+      <text class="d">芒性</text>
+      <text class="d">
+        召唤「众水的歌者」，每隔一段时间，受益于生命值上限，为周围的当前场上角色恢复生命值。
+      </text>
+
+      <text class="d">
+        「沙龙成员」与「众水的歌者」共享持续时间，芙宁娜通过重击更换客人的阵容时，将继承持续时间。
+      </text>
+      <text class="d">「沙龙成员」或「众水的歌者」存在期间，芙宁娜能够在水面上移动。</text>
+
+      <text class="d">
+        芙宁娜的孤心沙龙总有固定成员到访。其他时候都是谢贝蕾妲小姐、海薇玛夫人和乌瑟勋爵，而忧郁的星期三出现的则是歌者。
+      </text>
+
+      <text class="d">万众狂欢</text>
+      <text class="d">描述</text>
+      <text class="d">
+        凝聚狂欢之意，构筑水沫的舞台，基于芙宁娜的生命值上限，造成水元素范围伤害，并使队伍中附近的角色进入「普世欢腾」状态：
+      </text>
+      <text class="d">
+        持续期间，角色的当前生命值提升或降低时，基于提升或降低数值相对于生命值上限的比例，每1%都将使芙宁娜获得1点「气氛值」。
+      </text>
+      <text class="d">
+        同时，基于芙宁娜持有的「气氛值」，附近的队伍中所有角色造成的伤害提升，受治疗加成提升。
+      </text>
+      <text class="d">持续时间结束时，芙宁娜持有的「气氛值」将被移除。</text>
+
+      <text class="d">
+        「喝彩吧！赞美吧！刮目相看吧！举起酒杯吧！每个没有欢宴的夜晚都是对痛苦、清醒白日的浪费…呃，那，没成年的就换成葡萄汁！」
+      </text>
+
+      <text class="d">停不了的圆舞角色突破等级1解锁</text>
+      <text class="d">描述</text>
+      <text class="d">
+        队伍中当前场上的角色受到治疗时，若这次治疗的来源不是芙宁娜自己并且治疗回复量溢出，在接下来的4秒内，芙宁娜每2秒将为队伍中附近的角色恢复一次生命值，回复量相当于角色各自生命值上限的2%。
+      </text>
+
+      <text class="d">无人听的自白角色突破等级4解锁</text>
+      <text class="d">描述</text>
+      <text class="d">
+        每1000点生命值上限都将使处于不同始基力属性下的芙宁娜的孤心沙龙获得相应的增益效果：
+      </text>
+      <text class="d">
+        「沙龙成员」造成的伤害提升0.7%，通过这种方式至多使「沙龙成员」造成的伤害提升28%；
+      </text>
+      <text class="d">
+        「众水的歌者」为周围的当前场上角色恢复生命值的间隔降低0.4%，通过这种方式至多使「众水的歌者」为周围的当前场上角色恢复生命值的间隔降低16%。
+      </text>
+
+      <text class="d">瀚海亦舞台</text>
+      <text class="d">描述</text>
+      <text class="d">异色原海异种能力的冷却时间降低30%。</text>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 25px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/wiki"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/wiki"
+    })
+  }
+}
+</script>

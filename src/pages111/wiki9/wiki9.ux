@@ -1,0 +1,181 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">Wiki</text>
+    </div>
+    <div class="header column center">
+      <text class="b">《原神》角色演示-「芙宁娜：世界皆舞台」</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">Le monde n'est qu'une scène</text>
+      <text class="d">世界不过舞台。</text>
+      <text class="d">Il vaut mieux rire que pleurer</text>
+      <text class="d">与其哭着表演，还是笑着表演更好，</text>
+      <text class="d">car le rire est le propre de l'homme</text>
+      <text class="d">因为只有人类才会笑；</text>
+      <text class="d">Riez de tout cela, ne vous inquiétez pas</text>
+      <text class="d">欢笑吧，不必有所顾虑，</text>
+      <text class="d">profitons d'aujourd'hui</text>
+      <text class="d">让我们享受今天。</text>
+    </div>
+
+    <div class="header column center">
+      <text class="b">《原神》剧情PV-「轻涟」及其演绎版</text>
+    </div>
+    <div class="description footer column">
+      <text class="d">Ah, si je pouvais vivre dans l'eau,</text>
+      <text class="d">啊，若化水复回归途</text>
+      <text class="d">le monde serait-il plus beau?</text>
+      <text class="d">令故土朝暮如初</text>
+      <text class="d">Nous pardonneras-tu, ô chère mère?</text>
+      <text class="d">啊母亲可否将我宽恕</text>
+      <text class="d">L'eau dans son courant fait danser nos vies.</text>
+      <text class="d">向四季流溯，引万籁驰骛</text>
+      <text class="d">Et la cité, elle nourrit.</text>
+      <text class="d">所过处百废复苏</text>
+      <text class="d">Ainsi que toi, mon doux amour.</text>
+      <text class="d">亦充盈挚爱的心湖</text>
+
+      <text class="d">Non, le grand amour ne suffit pas.</text>
+      <text class="d">爱，就将这酣梦深埋</text>
+      <text class="d">Seul un adieu fleurira.</text>
+      <text class="d">诀别如繁花盛开</text>
+      <text class="d">C'est notre histoire de vie, douce et amère.</text>
+      <text class="d">似你我往怀，愉快悲哀</text>
+      <text class="d">Moi, je suis et serai toujours là,</text>
+      <text class="d">爱，我会在过去未来</text>
+      <text class="d">à voir le monde et sa beauté.</text>
+      <text class="d">注视这世间精彩</text>
+      <text class="d">Et ça ne changera jamais, jamais...</text>
+      <text class="d">一切从未改，未改……</text>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 25px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/wiki"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/wiki"
+    })
+  }
+}
+</script>

@@ -1,0 +1,221 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">NO STOP</text>
+      <text class="a">无尽模式</text>
+      <text class="b">当前阶段：{{ jieduan }}</text>
+      <text class="b">历史最高：{{ mostjieduan }}</text>
+      <text class="e" @click="pageTo">属性</text>
+      <text class="e" @click="idea">介绍</text>
+      <text class="e" @click="phb">排行榜</text>
+    </div>
+    <div class="body column center">
+      <image class="icon" src="/common/icon/a.png"></image>
+    </div>
+    <div class="footer column center">
+      <div style="margin-top: 10px">
+        <input
+          class="but"
+          type="button"
+          value="继续"
+          style="font-size: 30px; color: #ffffff"
+          onclick="handleButtonClick"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  justify-content: center;
+
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 20px;
+  color: #d1c5c5;
+}
+
+.e {
+  font-size: 25px;
+  color: #c9c9c9;
+  margin-top: 5px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "../../common/storage.js"
+
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    jieduan: 0,
+    mostjieduan: 0,
+    live: 1,
+    ns: 0
+  },
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    storage.get({
+      key: "jieduan",
+      success: (resaaa) => {
+        this.jieduan = resaaa ? parseInt(resaaa, 10) : 1
+      }
+    })
+    storage.get({
+      key: "mostjieduan",
+      success: (resaaa) => {
+        this.mostjieduan = resaaa ? parseInt(resaaa, 10) : 1
+      }
+    })
+  },
+
+  redirectToRandomPage() {
+    const randomNumber = Math.floor(Math.random() * 10) + 1
+    router.replace({
+      uri: "/pages/maoxian_start"
+    })
+  },
+  phb() {
+    router.replace({
+      uri: "/pages/leaderBoard"
+    })
+  },
+  handleButtonClick() {
+    this.redirectToRandomPage()
+  },
+  pageTo() {
+    router.replace({
+      uri: "/pages/maoxian_nostop_shuxing"
+    })
+  },
+  idea() {
+    router.push({
+      uri: "/pages/index_ideaall",
+      params: {
+        rule: "1.无尽模式的等级天赋单独计算，与普通模式不同\n2.无尽模式的天赋书只能通过战斗获得，不可通过祈愿获得，与普通模式经验书不互通\n3.经验书和天赋书分别可以提高等级生命和A,E,Q的技能伤害，升级等级一个经验书可以升一级，升级天赋1个天赋书可以升一级\n4.在战斗胜利后会获得无尽天赋书经验书\n5.战斗失败后会失去所有无尽经验书天赋书及等级天赋\n6.无尽模式的天赋和等级数值没有上限，等级提升函数为：y=750x+500，天赋A为y=250x，E为y=350x，Q为y=550x\n7.无尽模式普通敌人和BOSS都会随机出现，并且数值较普通模式会有时提高\n8.提升：前期最好多带上点甜甜花酿鸡"
+      }
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index_maoxian_choose"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index_maoxian_choose"
+    })
+  }
+}
+</script>

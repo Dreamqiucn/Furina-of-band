@@ -1,0 +1,615 @@
+<template>
+	<div class="page download-page" @swipe="toHomePage">
+
+		<div class="header column center">
+			<text class="a">胜利</text>
+			<text class="a">当前：第{{jieduan}}阶段</text>
+			<text class="a">已获得40原石</text>
+		</div>
+		<div class=" center row">
+			<image class="icon" src="/common/icon/jys.png">
+				<div class="column item">
+					<text class="a">无尽经验书</text>
+					<text class="a">x {{nsjy}}</text>
+				</div>
+		</div>
+		<div class=" center row">
+			<image class="icon" src="/common/icon/tfs.png">
+				<div class="column item">
+					<text class="a">无尽天赋书</text>
+					<text class="a">x {{nstf}}</text>
+				</div>
+		</div>
+		<div class="column center">
+			<text class="b">提示：</text>
+			<text class="b">无尽模式的天赋经验书只能在无尽模式获得并使用</text>
+
+			<text class="b">是否继续？</text>
+			<div class="center">
+
+				<input class="but1" type="button" value="YES" style="font-size: 35px; color: #ffffff" onclick="next" />
+				<input class="but2" type="button" value="NO" style="font-size: 35px; color: #ffffff" onclick="back" />
+			</div>
+		</div>
+
+	</div>
+</template>
+
+  <style>
+  .back {
+  	position: absolute;
+  	left: 6px;
+  	top: 6px;
+  	width: 72px;
+  	height: 72px;
+  	opacity: 1;
+  	z-index: 1000;
+  }
+
+  .but {
+  	width: 80%;
+  	background-color: rgba(255, 255, 255, 0.2);
+  	border-radius: 30px;
+  }
+
+  .but1 {
+  	width: 40%;
+  	background-color: rgba(115, 255, 115, 0.541);
+  	border-radius: 30px;
+
+  	margin-right: 5px;
+  }
+
+  .but2 {
+  	width: 40%;
+  	background-color: rgba(255, 115, 115, 0.637);
+  	border-radius: 30px;
+  	margin-left: 5px;
+  	margin-right: 5px;
+  }
+
+  .download-page {
+  	display: flex;
+  	flex-direction: column;
+
+  	height: 100%;
+  	position: absolute;
+  	width: 100%;
+  }
+
+  text {
+  	color: #ffffff;
+  }
+
+  .column {
+  	/* 竖直 */
+  	flex-direction: column;
+  }
+
+  .row {
+  	/* 水平 */
+  	flex-direction: row;
+  }
+
+  .info {
+  	/* 一块区域 */
+  	width: 272px;
+  	margin-top: 0px;
+  }
+
+  .center {
+  	align-items: center;
+  	justify-content: center;
+  }
+
+  .header {
+  	margin-top: 20px;
+  }
+
+  .but1 {
+  	width: 40%;
+  	background-color: rgba(115, 255, 115, 0.541);
+  	border-radius: 30px;
+
+  	margin-right: 5px;
+  }
+
+  .but2 {
+  	width: 40%;
+  	background-color: rgba(255, 115, 115, 0.637);
+  	border-radius: 30px;
+  	margin-left: 5px;
+  	margin-right: 5px;
+  }
+
+  .page {
+  	justify-content: center;
+
+  	background-color: #000000;
+  	flex: 1;
+  }
+
+  .body {
+  	margin-top: 10px;
+  }
+
+  .footer {
+  	margin-top: 10px;
+  	margin-left: 15px;
+  }
+
+  .icon {
+  	width: 60px;
+  	height: 60px;
+  }
+
+  .a {
+  	font-size: 25px;
+  }
+
+  .b {
+  	font-size: 25px;
+  	color: #d1c5c5;
+  }
+
+  .c {
+  	font-size: 20px;
+  	color: #d8d8d8;
+  }
+
+  .e {
+  	font-size: 25px;
+  	color: #c9c9c9;
+  }
+</style>
+
+<script>
+	// 导入模块
+	import router from '@system.router'
+	 import storage from '@system.storage'
+	export default {
+	  public: {
+	    jieduan: 0,
+	    nsjy1: 0,
+	    nsjy: 0,
+	    nstf: 0,
+		nstf1: 0,
+		stone: 0,
+	  },
+	onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+		storage.get({
+			key: "stone",
+			success: (res) => {
+				this.stone = res ? parseInt(res, 10) : 0;
+				this.stone += 40; // 直接进行数值相加
+				storage.set({
+					key: "stone",
+					value: this.stone.toString(), // 确保存储为字符串
+					
+				});
+			}
+		});
+	    storage.get({
+	          key: "jieduan",
+	          success: (resca) => {
+	            this.jieduan = resca ? parseInt(resca, 10) : 1
+              this.jieduan += 1; // 确保存储为字符串
+              storage.set({
+	              key: "jieduan",
+                value: this.jieduan.toString(), // 确保存储为字符串
+	           success: (rescDD) => {
+              if (this.jieduan > 0 && this.jieduan <= 10) {
+	            this.nsjy = Math.floor(Math.random() * (3 - 1 + 1)) + 1 // 生成 1 到 10 的随机整数
+	            this.nstf = Math.floor(Math.random() * (3 - 1 + 1)) + 1
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	
+	          } else if (this.jieduan > 10 && this.jieduan <= 20) {
+	            this.nsjy = Math.floor(Math.random() * (4 - 1 + 1)) + 1 // 生成 10 到 20 的随机整数
+	            this.nstf = Math.floor(Math.random() * (4 - 1 + 1)) + 1
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 20 && this.jieduan <= 30) {
+	            this.nsjy = Math.floor(Math.random() * (5 - 1 + 2)) + 1 // 生成 20 到 30 的随机整数
+	            this.nstf = Math.floor(Math.random() * (5 -1 + 2)) + 1
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 30 && this.jieduan <= 40) {
+	            this.nsjy = Math.floor(Math.random() * (6 - 1 + 3)) + 1 // 生成 30 到 40 的随机整数
+	            this.nstf = Math.floor(Math.random() * (6 - 1 + 3)) + 1
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 40 && this.jieduan <= 50) {
+	            this.nsjy = Math.floor(Math.random() * (7 - 2 + 4)) + 2 // 生成 40 到 50 的随机整数
+	            this.nstf = Math.floor(Math.random() * (7 - 2 + 4)) + 2
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 50 && this.jieduan <= 60) {
+	            this.nsjy = Math.floor(Math.random() * (8 - 2 + 5)) + 2 // 生成 50 到 60 的随机整数
+	            this.nstf = Math.floor(Math.random() * (8 - 2 + 5)) + 2
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 60 && this.jieduan <= 70) {
+	            this.nsjy = Math.floor(Math.random() * (8 - 2 + 5)) + 2 // 生成 60 到 70 的随机整数
+	            this.nstf = Math.floor(Math.random() * (8 - 2 + 5)) + 2
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 70 && this.jieduan <= 80) {
+	            this.nsjy = Math.floor(Math.random() * (8 - 2 + 5)) + 2 // 生成 70 到 80 的随机整数
+	            this.nstf = Math.floor(Math.random() * (8 - 2 + 5)) + 3
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 80 && this.jieduan <= 90) {
+	            this.nsjy = Math.floor(Math.random() * (9 - 3 + 6)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (9 - 3 + 6)) + 3
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 90 && this.jieduan <= 150) {
+	            this.nsjy = Math.floor(Math.random() * (10 - 3 + 7)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (10- 3 + 7)) + 3
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          } else if (this.jieduan > 150 && this.jieduan <= 300) {
+	            this.nsjy = Math.floor(Math.random() * (20 - 3 + 10)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (20- 5 + 10)) + 5
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } ); }else if (this.jieduan > 300 && this.jieduan <= 350) {
+	            this.nsjy = Math.floor(Math.random() * (50 - 3 + 50)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (50- 5 + 50)) + 5
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	  
+	          } else if (this.jieduan > 350 && this.jieduan <= 1500) {
+	            this.nsjy = Math.floor(Math.random() * (200 - 3 + 300)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (200- 3 + 300)) + 3
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          }else if (this.jieduan > 1500 && this.jieduan <= 1000000000000000) {
+	            this.nsjy = Math.floor(Math.random() * (500 - 3 + 1500)) + 3 // 生成 80 到 100 的随机整数
+	            this.nstf = Math.floor(Math.random() * (500- 3 + 1500)) + 3
+	            storage.get({
+	              key: "nsjy",
+	           success: (rescDD) => {
+	         this.nsjy1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nsjy1 += this.nsjy; // 直接进行数值相加
+	       storage.set({
+	         key: "nsjy",
+	       value: this.nsjy1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );storage.get({
+	              key: "nstf",
+	           success: (rescDD) => {
+	         this.nstf1 = rescDD ? parseInt(rescDD, 10) : 0;
+	         this.nstf1 += this.nstf; // 直接进行数值相加
+	       storage.set({
+	         key: "nstf",
+	       value: this.nstf1.toString() // 确保存储为字符串
+	        });
+	       }
+	      } );
+	          }
+	       }
+	      } );
+	      
+	          }
+	      })
+		storage.get({
+	          key: "mostjieduan",
+	           success: (rescDD) => {
+	         this.mostjieduan = rescDD ? parseInt(rescDD, 10) : 0;
+			 if (this.jieduan > this.mostjieduan) {
+              storage.set({
+                key: "mostjieduan",
+                value: this.jieduan.toString()
+              })
+              
+              return
+          }else {
+            return
+			   }
+	   }} );
+			
+		
+	  },
+	  toHomePage(eve) {
+	    if (eve.direction === 'right') {
+	      router.replace({
+	      uri: '/pages/index_maoxian_nostop'
+	      })
+	  }
+	  
+	  }
+	,
+	next() {
+		router.replace({
+	      uri: '/pages/maoxian_start'
+	    })
+	},
+back() {
+router.replace({
+          uri: '/pages/index_maoxian_nostop'
+})}}
+</script>

@@ -1,0 +1,539 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="page">
+      <text class="title">图鉴</text>
+      <div @click="idea"><text class="b">规则</text></div>
+
+      <list class="list" bounces="true">
+        <list-item class="item center" type="custom" @click="cd">
+          <text class="name">《清涟》CD</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="cake">
+          <text class="name">小蛋糕</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="uncake">
+          <text class="name">致水神</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="ball">
+          <text class="name">纠缠之缘</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="juice">
+          <text if="level >= 10" class="name">枫达饮料</text>
+          <text if="level < 10" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="god">
+          <text if="level >= 20" class="name">神之眼</text>
+          <text if="level < 20" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xz">
+          <text if="level >= 30" class="name">鞋子</text>
+          <text if="level < 30" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="water">
+          <text if="level >= 40" class="name">眼泪</text>
+          <text if="level < 40" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="mz">
+          <text if="level >= 50" class="name">小帽子</text>
+          <text if="level < 50" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="foot">
+          <text if="level >= 60" class="name">袜子</text>
+          <text if="level < 60" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="hair">
+          <text if="level >= 70" class="name">头发</text>
+          <text if="level < 70" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="novel">
+          <text if="level >= 80" class="name">轻小说</text>
+          <text if="level < 80" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="th">
+          <text if="level >= 90" class="name">腿环</text>
+          <text if="level < 90" class="name">？</text>
+        </list-item>
+        <list-item class="item center" type="custom" @click="xm">
+          <text if="level >= 100" class="name">小米手环</text>
+          <text if="level < 100" class="name">？</text>
+        </list-item>
+      </list>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import storage from "@system.storage"
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    level: 0
+  },
+  onInit() {
+    storage.get({
+      key: "level",
+      success: (resC) => {
+        this.level = resC ? parseInt(resC, 10) : 5
+      }
+    })
+  },
+  f() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "甜甜花"
+      }
+    })
+  },
+  j() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "甜甜花酿鸡"
+      }
+    })
+  },
+  bird() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "鸟"
+      }
+    })
+  },
+
+  pig() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "甜甜花"
+      }
+    })
+  },
+  j() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "甜甜花酿鸡"
+      }
+    })
+  },
+  bird() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "鸟"
+      }
+    })
+  },
+
+  pig() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "野猪"
+      }
+    })
+  },
+  ff() {
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "骗骗花"
+      }
+    })
+  },
+  idea() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.replace({
+      uri: "/pages/ideap"
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  },
+  cake() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "小蛋糕"
+      }
+    })
+  },
+  novel() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 80) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "轻小说"
+      }
+    })
+  },
+  water() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 40) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "眼泪"
+      }
+    })
+  },
+  juice() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 10) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "枫达饮料"
+      }
+    })
+  },
+  foot() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 60) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "袜子"
+      }
+    })
+  },
+  xz() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 30) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "鞋子"
+      }
+    })
+  },
+  hair() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 70) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "头发"
+      }
+    })
+  },
+  god() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 20) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "神之眼"
+      }
+    })
+  },
+  th() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 90) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "腿环"
+      }
+    })
+  },
+  cd() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "《清涟》CD"
+      }
+    })
+  },
+  xm() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 100) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "小米手环"
+      }
+    })
+  },
+  ball() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "纠缠之缘"
+      }
+    })
+  },
+  uncake() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 0) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "致水神"
+      }
+    })
+  },
+  mz() {
+    if (this.level < 50) {
+      return
+    }
+    // 跳转到应用内的某个页面，当前页面无法返回
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "小帽子"
+      }
+    })
+  },
+  qc() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 110) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "伊黎耶的旋舞"
+      }
+    })
+  },
+  md1() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 120) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "西风大教堂"
+      }
+    })
+  },
+  md2() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 130) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "风之城"
+      }
+    })
+  },
+  ly1() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 140) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "千船万商云集之地"
+      }
+    })
+  },
+  ly2() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 150) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "玉京台"
+      }
+    })
+  },
+  dq1() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 160) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "鸣神·离岛"
+      }
+    })
+  },
+  dq2() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 170) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "远眺踏鞴之岛"
+      }
+    })
+  },
+  xmxm1() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 180) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "一切智慧具足之城"
+      }
+    })
+  },
+  xmxm2() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 190) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "双树控扼的港湾"
+      }
+    })
+  },
+  last() {
+    // 跳转到应用内的某个页面，当前页面无法返回
+    if (this.level < 200) {
+      return
+    }
+    router.push({
+      uri: "/pages/photo_all",
+      params: {
+        which: "于秋分山远眺"
+      }
+    })
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index"
+    })
+  }
+}
+</script>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.b {
+  font-size: 30px;
+  color: #757575;
+
+  margin-bottom: 10px;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  align-items: center;
+  justify-content: center;
+
+  /* 页面大小 */
+  background-color: #000000;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.title {
+  margin-top: 10px;
+  font-size: 35px;
+  color: #ffffff;
+}
+
+.list {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.item {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.image {
+  width: 128px;
+  flex: auto;
+  margin-left: 20px;
+}
+
+.name {
+  width: 100%;
+  font-size: 30px;
+  text-align: center;
+  color: #a3a3a3;
+}
+</style>

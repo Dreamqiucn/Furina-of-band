@@ -1,0 +1,743 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+
+    <div class="header column center">
+      <text class="a">属性</text>
+      <text class="b">经验书:{{nsjy}} 天赋书:{{nstf}} </text>
+    </div>
+    <div class="body column center">
+      <div>
+        <div class="center column">
+          <text class="b">LV:{{nslv}}</text>
+          <text class="b">血量:{{nsblood}} </text>
+        </div>
+
+        <input class="but1" type="button" value="升级" style="font-size: 20px;color: #ffffff;" onclick="lvup"></input>
+      </div>
+      <div class="center">
+        <image class="icon " src="/common/icon/a.png"></image>
+        <div class="center column"><text class="b">LV:{{nsalv}}</text>
+          <text class="b"> 伤害:{{nsaka}}</text>
+        </div>
+
+        <input class="but" type="button" value="升级" style="font-size: 20px;color: #ffffff;" onclick="aup"></input>
+      </div>
+      <div class="center">
+        <div class="column">
+          <div class="center">
+            <image class="icon " src="/common/icon/e.png"></image>
+            <div class="center column"><text class="bc">LV:{{nselv}}</text>
+              <text class="bc"> 伤害:{{nsake}}</text>
+            </div>
+          </div>
+          <div class="center">
+            <image class="icon " src="/common/icon/e2.png"></image>
+            <div class="center column"><text class="bc">LV:{{nselv}}</text>
+
+              <text class="bc"> 治疗:{{upblood}}</text>
+            </div>
+          </div>
+        </div>
+        <input class="but" type="button" value="升级" style="font-size: 20px;color: #ffffff;" onclick="eup"></input>
+
+      </div>
+      <div class="center">
+        <image class="icon " src="/common/icon/q.png"></image>
+        <div class="center column"><text class="b">LV:{{nsqlv}}</text>
+          <text class="b"> 伤害:{{nsakq}}</text>
+        </div>
+        <input class="but" type="button" value="升级" style="font-size: 20px;color: #ffffff;" onclick="qup"></input>
+      </div>
+      <input class="but111" type="button" value="一键升级" style="font-size: 25px;color: #ffffff;" onclick="oneKeyUpgrade" />
+      <input class="but111" type="button" value="数据备份" style="font-size: 25px;color: #ffffff;" onclick="bf" />
+      <input class="but111" type="button" value="使用备份恢复数据" style="font-size: 17px;color: #ffffff;" onclick="bfback" />
+      <text style="font-size: 25px;color: #ffffff;">备份：</text>
+      <text style="font-size: 25px;color: #ffffff;">角色等级{{bff.nslv}}</text>
+      <text style="font-size: 25px;color: #ffffff;">A技能等级{{bff.nsalv}}</text>
+      <text style="font-size: 25px;color: #ffffff;">E技能等级{{bff.nselv}}</text>
+      <text style="font-size: 25px;color: #ffffff; margin-bottom: 30px;">Q技能等级{{bff.nsqlv}}</text>
+
+      <input class="but1" if="{{see}}" type="button" value="复活" style="font-size: 30px; color: #ffffff"
+        onclick="eatCake" />
+    </div>
+
+
+  </div>
+</template>
+
+  <style>
+  .back {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    width: 72px;
+    height: 72px;
+    opacity: 1;
+    z-index: 1000;
+  }
+
+  .but1 {
+    width: 45px;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+  }
+
+  .but111 {
+    width: 145px;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+  }
+
+  .but {
+    width: 45px;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+  }
+
+  .download-page {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+  }
+
+  text {
+    color: #ffffff;
+  }
+
+  .column {
+    /* 竖直 */
+    flex-direction: column;
+  }
+
+  .row {
+    /* 水平 */
+    flex-direction: row;
+  }
+
+
+  .center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .page {
+    /* 页面大小 */
+
+    background-color: #000000;
+    flex: 1;
+  }
+
+
+
+
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .a {
+    font-size: 35px;
+  }
+
+  .b {
+    font-size: 20px;
+    color: #d1c5c5;
+
+  }
+
+  .bc {
+    font-size: 16px;
+    color: #d1c5c5;
+
+  }
+
+  .e {
+    font-size: 25px;
+    color: #c9c9c9;
+  }
+</style>
+
+<script>
+  // 导入模块
+  import router from '@system.router'
+  import storage from '@system.storage'
+  import prompt from '@system.prompt'
+  export default {
+    public:{
+      nsjy: 0,
+      nslv: 0,
+      nstf: 0,
+      nselv: 0,
+      nsqlv: 0,
+      nsalv: 0,      
+      live: 0,
+      see : false,
+      nsaka: 0,
+    nsake: 0,
+    nsakq: 0,
+          nsblood: 0,
+          upblood: 0,
+    jieduan: 1,
+    bff:{
+			nslv: 0,
+			nselv: 0,
+			nsqlv: 0,
+			nsalv: 0,
+			jieduan: 0,
+		},
+		backtimer: 0,
+  },// 在script部分添加方法
+  bf(){
+		this.bff.nslv = this.nslv;
+		this.bff.nselv = this.nselv;
+		this.bff.nsqlv = this.nsqlv;
+		this.bff.nsalv = this.nsalv;
+		this.bff.jieduan = this.jieduan;
+		storage.set({
+			key: "bff",
+			value: JSON.stringify(this.bff),
+			success: () => {
+				prompt.showToast({
+					message: "数据备份成功",
+					duration: 1000
+				})
+			
+	}});
+	},
+	bfback(){
+		this.backtimer += 1;
+		if (this.backtimer === 4) {
+			storage.get({
+			key: "bff",
+			success: (res) => {
+				if (res) {
+					
+					this.bff = JSON.parse(res);
+					this.nslv = this.bff.nslv;
+					this.nselv = this.bff.nselv;
+					this.nsqlv = this.bff.nsqlv;
+					this.nsalv = this.bff.nsalv;
+					this.jieduan = this.bff.jieduan;
+					storage.set({
+						key:"nslv",
+						value: this.nslv.toString(),
+					});
+					storage.set({
+						key:"nsalv",
+						value: this.nsalv.toString(),
+					});
+					storage.set({
+						key:"nselv",
+						value: this.nselv.toString(),
+					});
+					storage.set({
+						key:"nsqlv",
+						value: this.nsqlv.toString(),
+					});
+					prompt.showToast({
+						message: "数据恢复成功",
+						duration: 1000
+					})
+				}else{
+					prompt.showToast({
+						message: "没有备份数据",
+						duration: 1000
+					})
+				}
+			}
+		});
+			this.backtimer = 0;
+		} else {
+			prompt.showToast({
+				message: "按三次按钮将覆盖当前数据",
+				duration: 1000,
+			});
+		}
+		
+	},  
+  delete() {
+    this.clickCount += 1
+    if (this.clickCount === 5) {
+      const keysToDelete = [
+        "mxlv",
+        "alv",
+        "qlv",
+        "elv",
+        "aka",
+        "ake",
+        "akq",
+        "blood",
+        
+      ] // 添加需要删除的键
+      keysToDelete.forEach((key) => {
+        storage.delete({
+          key: key
+        })
+      })
+    } else if (this.clickCount === 4) {
+      prompt.showToast({
+        message: "再点击1次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 3) {
+      prompt.showToast({
+        message: "再点击2次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 2) {
+      prompt.showToast({
+        message: "再点击3次将会清除数据",
+        duration: 1000
+      })
+    } else if (this.clickCount === 1) {
+      prompt.showToast({
+        message: "再点击4次将会清除数据",
+        duration: 1000
+      })
+    }
+  },
+async oneKeyUpgrade() {
+  // 资源获取封装函数
+  const getValidResource = (key) => {
+    return new Promise((resolve) => {
+      storage.get({
+        key: key,
+        success: (res) => {
+          let value = parseInt(res, 10);
+          if (isNaN(value)) {
+            value = this.jieduan * 3;
+            storage.set({
+              key: key,
+              value: value.toString(),
+              success: () => resolve(value)
+            });
+            prompt.showToast({
+        message: "数据加载异常，经验书/天赋书数据已重置为当前阶段的3倍 建议：重新启动游戏或重启手环",
+        duration: 3000
+      })
+          } else {
+            resolve(value);
+          }
+        },
+        fail: () => resolve(this.jieduan * 3)
+      });
+    });
+  };
+
+  try {
+    // 原子化获取资源
+    const [currentJy, currentTf] = await Promise.all([
+      getValidResource("nsjy"),
+      getValidResource("nstf")
+    ]);
+
+    // 批量角色升级
+    if (currentJy > 0) {
+      const newLevel = this.nslv + currentJy;
+      await Promise.all([
+        storage.set({ key: "nslv", value: newLevel.toString() }),
+        storage.set({ key: "nsjy", value: "0" })
+      ]);
+      this.nslv = newLevel;
+      this.nsjy = 0;
+      this.nsblood = newLevel * 750 + 500;
+      await storage.set({ key: "nsblood", value: this.nsblood.toString() });
+    }
+
+    // 批量技能升级
+    if (currentTf > 0) {
+      let remaining = currentTf;
+      const upgrades = {
+        a: { key: "nsalv", ak: "nsaka", count: 0 },
+        e: { key: "nselv", ak: "nsake", count: 0 },
+        q: { key: "nsqlv", ak: "nsakq", count: 0 }
+      };
+
+      // 智能分配算法 (A->E->Q 循环)
+      while (remaining > 0) {
+        if (remaining >= 3) {
+          upgrades.a.count++;
+          upgrades.e.count++;
+          upgrades.q.count++;
+          remaining -= 3;
+        } else {
+          if (remaining-- > 0) upgrades.a.count++;
+          if (remaining-- > 0) upgrades.e.count++;
+          if (remaining-- > 0) upgrades.q.count++;
+        }
+      }
+
+      // 执行技能升级
+      const storageOps = [];
+      for (const skill of Object.values(upgrades)) {
+        if (skill.count > 0) {
+          const newLevel = this[skill.key] + skill.count;
+          const newDamage = skill.ak === "nsaka" ? newLevel * 250 :
+                          skill.ak === "nsake" ? newLevel * 350 : 
+                          newLevel * 550;
+
+          this[skill.key] = newLevel;
+          this[skill.ak] = newDamage;
+          
+          storageOps.push(storage.set({ key: skill.key, value: newLevel.toString() }));
+          storageOps.push(storage.set({ key: skill.ak, value: newDamage.toString() }));
+
+          // 更新治疗量
+          if (skill.ak === "nsake") {
+            this.upblood = Math.round(newDamage / 5);
+          }
+        }
+      }
+
+      // 清空天赋书
+      this.nstf = 0;
+      storageOps.push(storage.set({ key: "nstf", value: "0" }));
+
+      // 批量存储操作
+      await Promise.all(storageOps);
+    }
+  } catch (error) {
+    console.error("一键升级失败:", error);
+    // 可以在这里添加错误恢复逻辑
+  }
+},
+    lvup() {
+    
+        storage.get({
+            key: "nsjy",
+            success: (resca) => {
+                this.nsjy = resca ? parseInt(resca, 10) : 0;
+                if (this.nsjy <= 0) {
+                    return;
+                }
+                this.nsjy -= 1;
+                storage.set({
+                    key: "nsjy",
+                    value: this.nsjy.toString()
+                });
+                storage.get({
+                    key: "nslv",
+                    success: (resA) => {
+                        this.nslv = resA ? parseInt(resA, 10) : 0;
+                        this.nslv += 1;
+                        storage.set({
+                            key: "nslv",
+                            value: this.nslv.toString(),
+                            success: (a) => {
+                                        
+                            this.nsblood = this.nslv * 750+500; // 适用于大于等于13的情况
+                             storage.set({ key: "nsblood", value: this.nsblood.toString() });    
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    
+},
+eup() {
+    
+       storage.get({
+    key: "nstf",
+    success: (resca) => {
+        this.nstf = resca ? parseInt(resca, 10) : 0;
+        
+        // 检查 nselv 的最大值并且控制 nstf 的减少
+        
+        if (this.nstf <= 0) {
+            return;
+        }
+        
+        this.nstf -= 1;
+        storage.set({
+            key: "nstf",
+            value: this.nstf.toString()
+        });
+        
+        storage.get({
+            key: "nselv",
+            success: (resB) => {
+                this.nselv = resB ? parseInt(resB, 10) : 0;
+                    this.nselv += 1; // 大于等于80时不限制
+                
+                storage.set({
+                            key: "nselv",
+                            value: this.nselv.toString(),
+                            success: (a) => {
+                                
+                        this.nsake = this.nselv * 350; // 适用于大于等于13的情况
+                        storage.set({ key: "nsake", value: this.nsake.toString() });    
+          this.upblood = Math.round(this.nsake/5)
+
+
+                            }
+                });
+                        
+            }
+        });
+    }
+});
+    
+},
+aup() {
+    
+    storage.get({
+ key: "nstf",
+ success: (resca) => {
+     this.nstf = resca ? parseInt(resca, 10) : 0;
+     
+     
+     if (this.nstf <= 0) {
+         return;
+     }
+     
+     this.nstf -= 1;
+     storage.set({
+         key: "nstf",
+         value: this.nstf.toString()
+     });
+     
+     storage.get({
+         key: "nsalv",
+         success: (resB) => {
+             this.nsalv = resB ? parseInt(resB, 10) : 0;
+                 this.nsalv += 1; // 大于等于80时不限制
+             
+             storage.set({
+                         key: "nsalv",
+                         value: this.nsalv.toString(),
+                         success: (a) => {
+                             
+                     this.nsaka = this.nsalv * 250; // 适用于大于等于13的情况
+                     storage.set({ key: "nsaka", value: this.nsaka.toString() });    
+
+
+                         }
+                     });
+         }
+     });
+ }
+});
+ 
+},
+qup()  {
+    
+    storage.get({
+ key: "nstf",
+ success: (resca) => {
+     this.nstf = resca ? parseInt(resca, 10) : 0;
+     
+     
+     if (this.nstf <= 0) {
+         return;
+     }
+     
+     this.nstf -= 1;
+     storage.set({
+         key: "nstf",
+         value: this.nstf.toString()
+     });
+     
+     storage.get({
+         key: "nsqlv",
+         success: (resB) => {
+             this.nsqlv = resB ? parseInt(resB, 10) : 0;
+                 this.nsqlv += 1; // 大于等于80时不限制
+             
+             storage.set({
+                         key: "nsqlv",
+                         value: this.nsqlv.toString(),
+                         success: (a) => {
+                             
+                     this.nsakq = this.nsqlv * 550; // 适用于大于等于13的情况
+                     storage.set({ key: "nsakq", value: this.nsakq.toString() });    
+
+
+                         }
+                     });
+         }
+     });
+ }
+});
+ 
+},
+ 
+    onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+  // 初始化阶段值
+  storage.get({
+			key:"bff",
+			success: (res) => {
+				if (res) {
+					console.log("有备份数据")
+					this.bff = JSON.parse(res);
+
+				}else{
+					console.log("没有备份数据")
+				}
+			}
+		})
+  storage.get({
+    key: "jieduan",
+    success: (res) => {
+      this.jieduan = res ? Math.max(parseInt(res, 10), 1) : 1;
+    },
+    fail: () => {
+      this.jieduan = 1;
+      storage.set({ key: "jieduan", value: "1" });
+    }
+  });
+
+  // 资源初始化通用方法
+  const initResource = (key, callback) => {
+    storage.get({
+      key: key,
+      success: (res) => {
+        let value = parseInt(res, 10);
+        if (isNaN(value)) {
+          value = this.jieduan * 3;
+          storage.set({
+            key: key,
+            value: value.toString(),
+            success: () => {
+              this[key] = value; // 更新公共变量
+              callback?.(value);
+            }
+          });
+        } else {
+          this[key] = value;
+          callback?.(value);
+        }
+      },
+      fail: () => {
+        const defaultValue = this.jieduan * 3;
+        storage.set({
+          key: key,
+          value: defaultValue.toString(),
+          success: () => {
+            this[key] = defaultValue;
+            callback?.(defaultValue);
+          }
+        });
+      }
+    });
+  };
+
+  // 初始化经验书和角色等级
+  initResource("nsjy", (jyValue) => {
+    // 获取角色等级
+    storage.get({
+      key: "nslv",
+      success: (res) => {
+        this.nslv = res ? parseInt(res, 10) : 1;
+        // 计算血量
+        this.nsblood = this.nslv * 750 + 500;
+        // 同步存储
+        storage.set({ key: "nsblood", value: this.nsblood.toString() });
+      },
+      fail: () => {
+        this.nslv = 1;
+        this.nsblood = 1 * 750 + 500;
+        storage.set({ key: "nslv", value: "1" });
+        storage.set({ key: "nsblood", value: this.nsblood.toString() });
+      }
+    });
+  });
+
+  // 初始化天赋书和技能系统
+  initResource("nstf", (tfValue) => {
+    // 技能初始化通用方法
+    const initSkill = (skillKey, defaultValue, damageKey, formula) => {
+      storage.get({
+        key: skillKey,
+        success: (res) => {
+          this[skillKey] = res ? parseInt(res, 10) : defaultValue;
+          // 计算伤害值
+          this[damageKey] = formula(this[skillKey]);
+          // 特殊处理治疗量
+          if(damageKey === "nsake") {
+            this.upblood = Math.round(this[damageKey] / 5);
+          }
+          // 同步存储
+          storage.set({ 
+            key: damageKey, 
+            value: this[damageKey].toString() 
+          });
+        },
+        fail: () => {
+          this[skillKey] = defaultValue;
+          this[damageKey] = formula(defaultValue);
+          storage.set({ key: skillKey, value: defaultValue.toString() });
+          storage.set({ key: damageKey, value: this[damageKey].toString() });
+        }
+      });
+    };
+
+    // 初始化各个技能
+    initSkill("nsalv", 1, "nsaka", (lv) => lv * 250);  // A技能
+    initSkill("nselv", 1, "nsake", (lv) => lv * 350);  // E技能
+    initSkill("nsqlv", 1, "nsakq", (lv) => lv * 550);  // Q技能
+  });
+},
+    toHomePage(eve) {
+      if (eve.direction === 'right') {
+        router.replace({
+          uri: '/pages/index_maoxian_nostop'
+        })
+      }
+    }
+  ,
+back() {
+router.replace({
+          uri: '/pages/index_maoxian_nostop'
+})},
+gan() {
+router.replace({
+          uri: '/pages/maoxian_gan'
+})}}
+</script>

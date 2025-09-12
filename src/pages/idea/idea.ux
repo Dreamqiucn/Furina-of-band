@@ -1,0 +1,235 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">玩法/教程</text>
+    </div>
+    <div class="header column center">
+      <text class="b">简要介绍</text>
+    </div>
+
+    <div class="description footer column center">
+      <text class="d">这是一个养成类的vela快应用游戏。你可以通过签到，吃小蛋糕来获得好感度。</text>
+      <text class="d">
+        好感度达到一定值会解锁芙宁娜的一些小物品在“图鉴”里，和解锁一些新的“故事”
+      </text>
+    </div>
+    <div class="header column center">
+      <text class="b">详细功能介绍</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">
+        1.签到 每天打开一次此程序，则好感度会自动增加5，并且增加十个“纠缠之缘”到“祈愿”界面
+      </text>
+      <text class="d">
+        2.祈愿
+        点击“祈愿”按钮，会有三种出“小蛋糕”（普茹斯蒂司）的可能，概率最大的为出一个“小蛋糕”，其次为两个，概率最小为出三个
+      </text>
+      <text class="d">
+        3.小蛋糕 祈愿中获得的小蛋糕，在“小蛋糕”界面可以吃掉，吃掉后，会获得5%好感度
+      </text>
+      <text class="d">
+        4.故事
+        故事随好感度的增加而解锁，其内容我是让ChatGPT写的，所以内容可能不太正常，详细规则请看“故事”界面
+      </text>
+      <text class="d">
+        5.图鉴
+        好感度达到一定值后，在图鉴界面会解锁芙宁娜的一些小物品，详细规则请看“图鉴”界面，点击小物品可以查看小物品的详细介绍
+      </text>
+    </div>
+    <div class="header column center">
+      <text class="b">清除数据方法</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">
+        打开“关于”页面，点击芙宁娜图标，进入界面，点击“清除数据”按钮五次，即可清除本程序后台所有数据，好感度，小蛋糕，纠缠之缘等
+      </text>
+      <text class="d">清除数据，所宜深慎</text>
+    </div>
+    
+    <div class="header column center">
+      <text class="b">联系方式/项目地址</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">Bilibili: Dreamqiucn</text>
+      <text class="d">Github:https://github.com/dreamqiucn/Furina-of-band</text>
+    </div>
+    <div class="header column center">
+      <text class="b">赞赏码</text>
+    </div>
+    <div class="description footer column center">
+      <text class="d">
+        如果你觉得这个项目很有趣，十分喜欢，那么欢迎打赏，感谢大家的一切支持，鼓舞我继续开发下去。
+      </text>
+
+      <image class="icon2" src="/common/icon/wx.png"></image>
+    </div>
+    <div class="header column center">
+      <text class="b">Pro版本宣传</text>
+    </div>
+    <div class="description footer column center">
+      <
+      <text class="d">此版本为1.1免费原版,Pro版本售价3.5￥,新增以下功能</text>
+      <text class="d">欢迎扫描二维码购买</text>
+
+      <text class="d">相较于免费版更新的内容有：</text>
+      <text class="d">1. 冒险模式</text>
+      <text class="d">2. 无尽模式（排行榜功能）</text>
+      <text class="d">3. 突发事件</text>
+      <text class="d">4. 故事新增10章</text>
+      <text class="d">5. 增加官方剧情4.2罪人舞步旋（可自定义旅行者名字）</text>
+      <text class="d">6. 图鉴增加10张</text>
+      <text class="d">7. 探索/采集</text>
+      <text class="d">8. 烹饪</text>
+      <text class="d">9. 芙宁娜打招呼</text>
+      <text class="d">10. BOSS挑战</text>
+      <text class="d">11. 芙宁娜Wiki百科</text>
+      <text class="d">12. 更改旅行者名字</text>
+      <text class="d">13. 自定义增加相遇之缘数目</text>
+      <text class="d">14. UI整体优化</text>
+      <text class="d">15. 加强的抽卡系统（可抽取武器及命之座）</text>
+      <text class="d">16. 武器配置</text>
+      <text class="d">17. 命之座</text>
+      <text class="d">18. 委托</text>
+      <text class="d">购买链接</text>
+
+      <qrcode
+        value="https://afdian.com/item/7f6a402c812311efa1bf5254001e7c00"
+        style="color: black"
+      ></qrcode>
+      <text class="d">安装教程</text>
+
+      <qrcode
+        value="https://www.bilibili.com/opus/1052333185858273287"
+        style="color: black"
+      ></qrcode>
+      <text class="d"></text>
+      <text class="d"></text>
+
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 0.7;
+}
+
+.description {
+  border: 3px solid rgba(255, 255, 255, 0.06);
+  border-radius: 36px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.icon {
+  width: 75%;
+  height: auto;
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  padding: 10px;
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 35px;
+  color: #999999;
+  margin-left: 20px;
+}
+
+.d {
+  font-size: 20px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  }
+}
+</script>

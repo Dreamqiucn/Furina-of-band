@@ -1,0 +1,257 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header center">
+      <text class="title">Wiki</text>
+    </div>
+    <list class="list1" bounces="true">
+      <list-item class="item justify-between" type="costom" for="{{list}}" @click="navigateToPage($item.Src)">
+        <div class="center">
+          <text class="subject-name">{{ $item.name }}</text>
+        </div>
+      </list-item>
+    </list>
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import app from "@system.app"
+
+export default {
+  // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
+  private: {
+    title: "示例页面",
+    list: [
+      {
+        name: "个人信息",
+
+        Src: "/pages/wiki1"
+      },
+      {
+        name: "命之座",
+
+        Src: "/pages/wiki2"
+      },
+      {
+        name: "天赋",
+
+        Src: "/pages/wiki3"
+      },{
+        name: "角色故事",
+
+        Src: "/pages/wiki6"
+      },
+      {
+        name: "官方介绍",
+
+        Src: "/pages/wiki4"
+      },
+      {
+        name: "生日/角色考据",
+
+        Src: "/pages/wiki5"
+      },
+      {
+        name: "等级数值",
+
+        Src: "/pages/wiki7"
+      },
+      {
+        name: "升级材料",
+
+        Src: "/pages/wiki8"
+      },
+      {
+        name: "相关歌词",
+
+        Src: "/pages/wiki9"
+      }
+    ]
+  },
+
+  routeDetail() {
+    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+    router.replace({
+      uri: "/pages/detail"
+    })
+  },
+  handleClick() {
+    app.terminate()
+  },
+  navigateToPage(src) {
+    router.replace({
+      uri: src
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index"
+    })
+  }
+}
+</script>
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(182, 182, 182, 0.2);
+  color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 383px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 30px;
+}
+
+.b {
+  font-size: 30px;
+
+  color: #ffffff;
+}
+
+.c {
+  font-size: 30px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 20px;
+  color: #adadad;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+@import "./more.less";
+
+.list {
+  width: 100%;
+  height: 100%;
+}
+.list1 {
+  width: 100%;
+  height: 80%;
+}
+
+.item {
+  height: 60px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.title {
+  color: #fff;
+  font-size: 35px;
+  margin-top: 25px;
+}
+
+.list-item-title {
+  font-size: 30px;
+  color: white;
+}
+
+.list-item {
+  height: 70px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.subject-image {
+  width: 70px;
+  height: 70px;
+  margin-left: 15px;
+  margin-right: 30px;
+}
+
+.subject-name {
+  font-size: 25px;
+  font-weight: 400;
+  align-items: center;
+  color: #fff;
+}
+</style>

@@ -1,0 +1,176 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">Wiki</text>
+    </div>
+    <div class="header column center">
+      <text class="b">等级数值</text>
+    </div>
+    <div class="description footer column">
+      <!-- 添加属性数据 -->
+      <text class="d">等级：1</text>
+      <text class="d">生命上限：1192 / 纵突破：3091</text>
+      <text class="d">攻击力：19 / 突破后：4113</text>
+      <text class="d">防御力：54 / 突破后：66</text>
+      <text class="d">暴击率：0% / 突破后：140</text>
+      <text class="d">----------------------</text>
+      <text class="d">等级：20</text>
+      <text class="d">生命上限：3091 / 突破后：6154</text>
+      <text class="d">攻击力：4113 / 突破后：6880</text>
+      <text class="d">防御力：66 / 突破后：98</text>
+      <text class="d">暴击率：140 / 突破后：187</text>
+      <text class="d">----------------------</text>
+      <text class="d">等级：40</text>
+      <text class="d">生命上限：6154 / 突破后：7916</text>
+      <text class="d">攻击力：98 / 突破后：126</text>
+      <text class="d">防御力：110 / 突破后：142</text>
+      <text class="d">暴击率：280 / 突破后：360</text>
+      <text class="d">----------------------</text>
+      <text class="d">等级：60</text>
+      <text class="d">生命上限：7916 / 突破后：9930</text>
+      <text class="d">攻击力：126 / 突破后：158</text>
+      <text class="d">防御力：142 / 突破后：170</text>
+      <text class="d">暴击率：360 / 突破后：451</text>
+      <text class="d">----------------------</text>
+      <text class="d">等级：80</text>
+      <text class="d">生命上限：9930 / 突破后：11712</text>
+      <text class="d">攻击力：158 / 突破后：187</text>
+      <text class="d">防御力：170 / 突破后：198</text>
+      <text class="d">暴击率：451 / 突破后：532</text>
+      <text class="d">----------------------</text>
+      <text class="d">等级：90</text>
+      <text class="d">生命上限：11712 / 突破后：13505</text>
+      <text class="d">攻击力：187 / 突破后：215</text>
+      <text class="d">防御力：198 / 突破后：227</text>
+      <text class="d">暴击率：532 / 突破后：614</text>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  margin: 0 auto;
+  /* Center align */
+}
+
+.icon {
+  width: 100%;
+  flex: 50%;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.page {
+  background-color: #000000;
+  width: 192px;
+  height: 480px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+}
+
+.icon2 {
+  width: 256px;
+  flex: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.c {
+  font-size: 25px;
+  color: #999999;
+  margin-left: 30px;
+}
+
+.d {
+  font-size: 25px;
+  color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.e {
+  font-size: 20px;
+  color: #ffffff;
+  margin-left: 10px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+
+export default {
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/wiki"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/wiki"
+    })
+  }
+}
+</script>

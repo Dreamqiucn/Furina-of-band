@@ -1,0 +1,349 @@
+<template>
+  <div class="page download-page" @swipe="toHomePage">
+    <div class="header column center">
+      <text class="a">冒险</text>
+      <text class="b">剩余次数：{{ cishu }}</text>
+      <text class="e" @click="pageTo">属性</text>
+      <text class="e" @click="idea">介绍</text>
+    </div>
+    <div class="body column center">
+      <image class="icon" src="/common/icon/a.png"></image>
+    </div>
+    <div class="footer column center">
+      <div style="margin-top: 10px">
+        <input
+          class="but"
+          type="button"
+          value="GO"
+          style="font-size: 30px; color: #ffffff"
+          onclick="handleButtonClick"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.back {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 72px;
+  height: 72px;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.but {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+}
+
+.download-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+text {
+  color: #ffffff;
+}
+
+.column {
+  /* 竖直 */
+  flex-direction: column;
+}
+
+.row {
+  /* 水平 */
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 20px;
+}
+
+.page {
+  justify-content: center;
+
+  background-color: #000000;
+  flex: 1;
+}
+
+.body {
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
+
+.a {
+  font-size: 35px;
+}
+
+.b {
+  font-size: 30px;
+  color: #d1c5c5;
+}
+
+.e {
+  font-size: 35px;
+  color: #c9c9c9;
+  margin-top: 5px;
+}
+</style>
+
+<script>
+// 导入模块
+import router from "@system.router"
+import storage from "../../common/storage.js"
+import prompt from "@system.prompt"
+
+export default {
+  public: {
+    today: 0,
+    lastdayd: 0,
+    cishu: 0,
+    adjustedc: 0,
+    live: 1
+  },
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  },
+  onInit() {
+    storage.get({
+      key: "index",
+      success: (data) => {
+        this.aaa = data
+      }
+    })
+    storage.get({
+      key: "rpg",
+      success: (data) => {
+        console.log(data)
+        if (data == 721 || this.aaa == "1234567890") {
+          console.log("successful")
+        } else if (data == "") {
+          console.log("无设备码")
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        } else {
+          console.log("有设备码没验证")
+
+          prompt.showToast({
+            message: "盗版死妈操你妈",
+            duration: 1000
+          })
+          router.replace({
+            uri: "pages/lock"
+          })
+        }
+      },
+      fail: () => {}
+    })
+    storage.get({
+      key: "live",
+      success: (resaaa) => {
+        this.live = resaaa ? parseInt(resaaa, 10) : 1
+      }
+    })
+    const today = new Date()
+    const adjustedc = today.getDay() === 0 ? 7 : today.getDay() // 将星期数转换为1-7的格式
+
+    storage.get({
+      key: "lastdayd",
+      success: (resB) => {
+        this.lastdayd = resB ? parseInt(resB, 10) : 0 // 获取并设置 lastday
+        //如果 lastday 与 adjustedA 相等，说明今天已经更新过 level，不需要更新
+        //如果 lastday 是 6 且 adjustedA 是 7，说明今天是星期日，需要更新 level
+        if (adjustedc !== this.lastdayd && adjustedc < 7) {
+          // 更新 lastday 和 level
+          storage.set({
+            key: "lastdayd",
+            value: adjustedc === 7 ? 0 : adjustedc.toString()
+            // 如果 adjustedA 是 7，说明今天是星期日，需要将 lastday 置为 0
+          })
+
+          storage.get({
+            key: "cishu",
+            success: (resmm) => {
+              this.cishu = resmm ? parseInt(resmm, 10) : 0
+              this.cishu += 6
+              storage.set({
+                key: "cishu",
+                value: this.cishu.toString()
+              })
+            }
+          })
+        } else if (adjustedc === 7 && this.lastdayd === 6) {
+          storage.set({
+            key: "lastdayd",
+            value: "0"
+          })
+          storage.get({
+            key: "cishu",
+            success: (resmm) => {
+              this.cishu = resmm ? parseInt(resmm, 10) : 0
+              this.cishu += 6
+              storage.set({
+                key: "cishu",
+                value: this.cishu.toString()
+              })
+            }
+          })
+        } else if (adjustedc === this.lastdayd || (adjustedc === 7 && this.lastdayd === 0)) {
+          // 不更新 level
+          storage.get({
+            key: "cishu",
+            success: (resmm) => {
+              this.cishu = resmm ? parseInt(resmm, 10) : 6
+            }
+          })
+        }
+      }
+    })
+  },
+
+  redirectToRandomPage() {
+    if (this.live === 1) {
+      const randomNumber = Math.floor(Math.random() * 8) + 1
+
+      this.cishu -= 1
+      storage.set({
+        key: "cishu",
+        value: this.cishu.toString(),
+        success: (resp) => {
+          this.cishu = parseInt(resp, 10)
+        }
+      })
+      switch (randomNumber) {
+        case 1:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "丘丘人"
+            }
+          })
+          break
+        case 2:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "丘丘暴徒"
+            }
+          })
+          break
+        case 3:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "丘丘王"
+            }
+          })
+          break
+        case 4:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "海乱鬼"
+            }
+          })
+          break
+
+        case 5:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "原海异种"
+            }
+          })
+          break
+        case 6:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "浮游草蕈兽"
+            }
+          })
+          break
+
+        case 7:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "浮游风蕈兽"
+            }
+          })
+          break
+
+        case 8:
+          router.push({
+            uri: "/pages/maoxian_putong",
+            params: {
+              which: "浮游水蕈兽"
+            }
+          })
+          break
+      }
+    } else {
+      prompt.showToast({
+        message: "芙宁娜牺牲了，请去配置界面复活芙宁娜",
+        duration: 2000
+      })
+    }
+  },
+  handleButtonClick() {
+    if (this.cishu < 1) {
+      return
+    }
+
+    this.redirectToRandomPage()
+  },
+  pageTo() {
+    router.push({
+      uri: "/pages/maoxian_shuxing"
+    })
+  },
+  idea() {
+    router.push({
+      uri: "/pages/index_ideaall",
+      params: {
+        rule: "1.每天会随机获得6次冒险的机会，冒险会遇到随机遇到丘丘人，丘丘暴徒，丘丘王，完成会获得经验书，天赋书\n2.若被丘丘人打倒，需要一个小蛋糕来复活芙宁娜，可以在失败界面复活也可以在配置界面复活\n3.经验书和天赋书分别可以提高等级生命和A,E,Q的技能伤害，升级等级一个经验书可以升一级，升级天赋两个天赋书可以升一级\n4.当等级低于20时，天赋最高升两级，低于40时最高升四级，低于60时最高升六级，低于80时最高升八级，天赋最高升到13级\n5.进行两次普通攻击后可以释放E技能，进行两次E技能后可以释放Q技能，E，Q技能相较于普通攻击有更高的伤害\n6.对战时，为回合制，每回合可以进行一次普通攻击，一次E技能或一次Q技能，随后敌人会进行攻击\n7.甜甜花酿鸡1个可以恢复1000生命值，可在探险界面中获得甜甜花和鸡腿，在烹饪界面制作"
+      }
+    })
+  },
+  toHomePage(eve) {
+    if (eve.direction === "right") {
+      router.replace({
+        uri: "/pages/index_maoxian_choose"
+      })
+    }
+  },
+  back() {
+    router.replace({
+      uri: "/pages/index_maoxian_choose"
+    })
+  }
+}
+</script>
